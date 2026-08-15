@@ -26,25 +26,26 @@
 
   padding: 16px;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.5);
 
   text-align: left;
 
   transition:
     background 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .risk-category:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.82);
+  border-color: var(--border);
 }
 
 .risk-category.is-selected {
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(21, 94, 239, 0.2);
+  box-shadow: 0 0 0 2px rgba(0, 99, 130, 0.16), 0 0 20px rgba(125, 211, 252, 0.15);
 }
 
 .risk-category__head {
@@ -103,11 +104,11 @@
 
   padding: 12px 14px;
 
-  border: 1px solid #B2CCFF;
+  border: 1px solid rgba(0, 99, 130, 0.35);
   border-radius: var(--radius-md);
-  background: var(--accent-soft);
+  background: rgba(0, 99, 130, 0.07);
 
-  color: var(--info);
+  color: var(--accent);
   font-size: 12.5px;
 }
 
@@ -141,9 +142,9 @@
 
   padding: 13px 14px;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .control-row__icon {
@@ -155,7 +156,7 @@
   height: 36px;
 
   border-radius: var(--radius-md);
-  background: var(--bg-elevated);
+  background: rgba(216, 226, 255, 0.6);
   color: var(--text-secondary);
 
   flex-shrink: 0;

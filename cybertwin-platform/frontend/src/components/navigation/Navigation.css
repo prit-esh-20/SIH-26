@@ -39,8 +39,8 @@
 
   border-radius: var(--radius-md);
 
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: rgba(123, 209, 250, 0.35);
+  color: var(--glacier-primary);
 
   flex-shrink: 0;
 }
@@ -89,7 +89,7 @@
   padding: 10px 12px;
   margin-bottom: 4px;
 
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   border-left: 3px solid transparent;
 
   color: var(--sidebar-text);
@@ -118,13 +118,14 @@
 }
 
 .nav-item:hover svg {
-  color: var(--sidebar-icon);
+  color: var(--sidebar-icon-active);
 }
 
 .nav-item.active {
   background: var(--sidebar-active);
   color: var(--sidebar-text-active);
   border-left-color: var(--sidebar-indicator);
+  box-shadow: 0 0 12px rgba(123, 209, 250, 0.1);
 }
 
 .nav-item.active svg {
@@ -184,8 +185,10 @@
 
   padding: 0 24px;
 
-  background: #FFFFFF;
-  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
 
   z-index: 90;
 }
@@ -214,9 +217,9 @@
   align-items: center;
   justify-content: center;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
   color: var(--text-secondary);
 
   flex-shrink: 0;
@@ -224,7 +227,7 @@
 
 .header-menu-button:hover {
   color: var(--text-primary);
-  background: var(--bg-card-hover);
+  background: rgba(125, 211, 252, 0.15);
 }
 
 .search-box {
@@ -237,17 +240,20 @@
 
   padding: 9px 12px;
 
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
 
   color: var(--text-muted);
 
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .search-box:focus-within {
   border-color: var(--accent);
+  box-shadow: var(--glass-focus-ring);
 }
 
 .search-box input {
@@ -297,7 +303,7 @@
 }
 
 .header-icon-button:hover {
-  background: var(--bg-card-hover);
+  background: rgba(125, 211, 252, 0.15);
   color: var(--text-primary);
 }
 
@@ -319,7 +325,7 @@
   width: 1px;
   height: 28px;
 
-  background: var(--border);
+  background: var(--glass-border);
 }
 
 .user-menu {
@@ -340,7 +346,7 @@
 }
 
 .user-menu:hover {
-  background: var(--bg-card-hover);
+  background: rgba(125, 211, 252, 0.15);
 }
 
 .user-avatar {
@@ -353,7 +359,7 @@
 
   border-radius: 50%;
 
-  background: var(--accent-soft);
+  background: rgba(123, 209, 250, 0.3);
   color: var(--accent);
 
   font-size: 11px;
@@ -400,7 +406,7 @@
     display: block;
     position: fixed;
     inset: 0;
-    background: rgba(16, 24, 40, 0.4);
+    background: rgba(4, 14, 33, 0.5);
     z-index: 105;
   }
 
