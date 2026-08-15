@@ -47,18 +47,20 @@
   --info-soft: #E8F1FF;
 
   /* Sidebar */
-  --sidebar-bg: #EEF3F8;
-  --sidebar-hover: #E2EAF3;
-  --sidebar-active: #DCEBFA;
-  --sidebar-border: #D7E0EA;
-  --sidebar-text: #64748B;
-  --sidebar-text-active: #155EEF;
-  --sidebar-brand: #102A43;
-  --sidebar-brand-subtitle: #64748B;
-  --sidebar-icon: #64748B;
-  --sidebar-icon-active: #155EEF;
-  --sidebar-footer: #64748B;
-  --sidebar-system-status: #16803C;
+  --sidebar-bg: #1E293B;
+  --sidebar-hover: #243447;
+  --sidebar-active: #294566;
+  --sidebar-border: #334155;
+  --sidebar-text: #CBD5E1;
+  --sidebar-text-muted: #94A3B8;
+  --sidebar-text-active: #60A5FA;
+  --sidebar-brand: #FFFFFF;
+  --sidebar-brand-subtitle: #94A3B8;
+  --sidebar-icon: #94A3B8;
+  --sidebar-icon-active: #60A5FA;
+  --sidebar-footer: #94A3B8;
+  --sidebar-system-status: #22C55E;
+  --sidebar-indicator: #3B82F6;
 
   /* Radii */
   --radius-sm: 6px;
@@ -66,7 +68,7 @@
   --radius-lg: 12px;
 
   /* Layout */
-  --sidebar-width: 184px;
+  --sidebar-width: 230px;
   --header-height: 64px;
 
   /* Elevation */
