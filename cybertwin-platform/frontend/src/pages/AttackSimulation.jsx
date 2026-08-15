@@ -93,11 +93,11 @@ function AttackSimulation() {
         <div className="sim-side">
           <div id="sim-form">
             {scenarios.loading || users.loading ? (
-              <div className="card">
+              <Card>
                 <div className="skeleton skeleton-line" />
                 <div className="skeleton skeleton-line" />
                 <div className="skeleton skeleton-line skeleton-line--w60" />
-              </div>
+              </Card>
             ) : scenarios.error || users.error ? (
               <ErrorState title="Unable to load simulation options" onRetry={scenarios.retry} />
             ) : (
