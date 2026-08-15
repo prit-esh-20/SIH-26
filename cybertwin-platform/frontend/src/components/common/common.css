@@ -29,6 +29,19 @@
   flex-wrap: wrap;
 }
 
+.dashboard-header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.dashboard-organization-name {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
 /* ============ Card ============ */
 .card {
   background: var(--glass-bg);
@@ -708,26 +721,6 @@
   background: rgba(255, 255, 255, 0.85);
   color: var(--text-primary);
   box-shadow: 0 0 14px rgba(125, 211, 252, 0.14);
-}
-
-/* ============ Demo notice ============ */
-.demo-notice {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 11px 14px;
-
-  border: 1px solid rgba(181, 71, 8, 0.4);
-  border-radius: var(--radius-md);
-  background: rgba(181, 71, 8, 0.08);
-
-  color: var(--warning);
-  font-size: 12.5px;
-}
-
-.demo-notice svg {
-  flex-shrink: 0;
 }
 
 /* ============ Misc ============ */

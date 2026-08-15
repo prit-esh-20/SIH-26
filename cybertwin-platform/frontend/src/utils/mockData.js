@@ -9,7 +9,7 @@
  */
 
 export const DEMO_ENVIRONMENT = {
-  name: "ApexFin Technologies",
+  name: "Elytron Technologies",
   industry: "Financial Services",
   environment: "Simulation",
   twinStatus: "Synchronized",

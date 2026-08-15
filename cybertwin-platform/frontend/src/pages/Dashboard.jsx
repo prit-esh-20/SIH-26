@@ -4,7 +4,6 @@ import PageTitle from "../components/common/PageTitle";
 import Card from "../components/common/Card";
 import Badge from "../components/common/Badge";
 import StatusIndicator from "../components/common/StatusIndicator";
-import DemoNotice from "../components/common/DemoNotice";
 import LoadingState from "../components/common/LoadingState";
 import ErrorState from "../components/common/ErrorState";
 
@@ -65,14 +64,12 @@ function Dashboard() {
         title="Cyber Risk Overview"
         subtitle="Monitor your organization's simulated cyber posture and attack exposure."
         actions={
-          <>
-            <select
-              className="select"
-              defaultValue="apexfin"
-              aria-label="Organization"
-            >
-              <option value="apexfin">ApexFin Technologies</option>
-            </select>
+          <div className="dashboard-header-actions">
+            {organization.data && (
+              <div className="dashboard-organization-name">
+                {organization.data.name}
+              </div>
+            )}
 
             {organization.loading ? (
               <StatusIndicator
@@ -85,15 +82,9 @@ function Dashboard() {
                 label={`Digital Twin: ${organization.data.twinStatus}`}
               />
             ) : null}
-          </>
+          </div>
         }
       />
-
-      {/* =====================================================
-          DEMO NOTICE
-          ===================================================== */}
-
-      <DemoNotice />
 
       {/* =====================================================
           KPI METRICS

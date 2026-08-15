@@ -1,9 +1,10 @@
 import Card from "../common/Card";
+import Badge from "../common/Badge";
 
 const SEVERITY_COLORS = {
   low: "#16803C",
   medium: "#B54708",
-  high: "#E65F00",
+  high: "var(--danger)",
   critical: "#B42318",
 };
 
@@ -17,7 +18,14 @@ function RiskScoreCard({ score, severity, note }) {
   return (
     <Card
       title="Overall Risk Score"
-      action={<span className={`badge badge--${severity}`}>{severity.toUpperCase()}</span>}
+      action={
+        <Badge
+          tone={severity === "high" ? "danger" : undefined}
+          severity={severity === "high" ? undefined : severity}
+        >
+          {severity.toUpperCase()}
+        </Badge>
+      }
     >
       <div className="risk-gauge">
         <svg
@@ -50,7 +58,7 @@ function RiskScoreCard({ score, severity, note }) {
             x="100"
             y="96"
             textAnchor="middle"
-            fill="var(--text-primary)"
+            fill="var(--danger)"
             fontSize="40"
             fontWeight="700"
           >

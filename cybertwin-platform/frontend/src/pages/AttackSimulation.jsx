@@ -7,7 +7,6 @@ import Badge from "../components/common/Badge";
 import Button from "../components/common/Button";
 import EmptyState from "../components/common/EmptyState";
 import ErrorState from "../components/common/ErrorState";
-import DemoNotice from "../components/common/DemoNotice";
 import SimulationForm from "../components/simulation/SimulationForm";
 import SimulationStatus from "../components/simulation/SimulationStatus";
 import SimulationResult from "../components/simulation/SimulationResult";
@@ -86,8 +85,6 @@ function AttackSimulation() {
         subtitle="Run controlled what-if scenarios against the organization's digital twin."
         actions={<Badge tone="violet">SIMULATED</Badge>}
       />
-
-      <DemoNotice />
 
       <div className="sim-layout">
         <div className="sim-side">

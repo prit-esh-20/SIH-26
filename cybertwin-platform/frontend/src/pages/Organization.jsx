@@ -15,7 +15,6 @@ import Card from "../components/common/Card";
 import Badge from "../components/common/Badge";
 import Button from "../components/common/Button";
 import StatusIndicator from "../components/common/StatusIndicator";
-import DemoNotice from "../components/common/DemoNotice";
 import Tabs from "../components/common/Tabs";
 import DataTable from "../components/common/DataTable";
 import LoadingState from "../components/common/LoadingState";
@@ -172,10 +171,8 @@ function SensitiveDataTable() {
             emptyTitle="No data classes found"
           />
           <div className="data-tab-note">
-            <DemoNotice>
-              All records are synthetic placeholders generated for the demonstration —
-              no real personal or financial data is stored or processed.
-            </DemoNotice>
+            All records are synthetic placeholders generated for the demonstration —
+            no real personal or financial data is stored or processed.
           </div>
         </>
       )}
@@ -247,8 +244,6 @@ function Organization() {
           )
         }
       />
-
-      <DemoNotice />
 
       <Card>
         {organization.loading || !organization.data ? (

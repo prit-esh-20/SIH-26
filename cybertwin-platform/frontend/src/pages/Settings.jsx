@@ -1,7 +1,6 @@
 import PageTitle from "../components/common/PageTitle";
 import Card from "../components/common/Card";
 import Badge from "../components/common/Badge";
-import DemoNotice from "../components/common/DemoNotice";
 import LoadingState from "../components/common/LoadingState";
 import ErrorState from "../components/common/ErrorState";
 
@@ -22,8 +21,6 @@ function Settings() {
         title="Settings"
         subtitle="Configure how CyberTwin models the organization and runs its simulations."
       />
-
-      <DemoNotice />
 
       <div className="settings-grid">
         <Card title="Organization">

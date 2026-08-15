@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, Menu, Search, ShieldCheck } from "lucide-react";
+import { Bell, Menu, Search, ShieldCheck } from "lucide-react";
 
 function Header({ onMenuClick }) {
   return (
@@ -43,8 +43,6 @@ function Header({ onMenuClick }) {
             <span className="user-name">Admin</span>
             <span className="user-role">Security Analyst</span>
           </div>
-
-          <ChevronDown size={16} />
         </button>
       </div>
     </header>

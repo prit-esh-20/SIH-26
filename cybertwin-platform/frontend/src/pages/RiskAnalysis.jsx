@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 
 import PageTitle from "../components/common/PageTitle";
 import Badge from "../components/common/Badge";
-import DemoNotice from "../components/common/DemoNotice";
 import ErrorState from "../components/common/ErrorState";
 import RiskOverview from "../components/risk/RiskOverview";
 import RiskCategoryCard from "../components/risk/RiskCategoryCard";
@@ -55,8 +54,6 @@ function RiskAnalysis() {
           )
         }
       />
-
-      <DemoNotice />
 
       {overview.loading || overview.error ? (
         overview.error ? (
