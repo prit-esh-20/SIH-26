@@ -104,13 +104,13 @@ function Settings() {
           <div className="key-value-list">
             <div className="settings-row">
               <div>
-                <div className="settings-row__label">Dark Mode</div>
+                <div className="settings-row__label">Enterprise Light Theme</div>
                 <div className="settings-row__hint">
-                  Dark-first theme, optimized for SOC environments. Light theme is not
-                  offered to keep contrast consistent.
+                  Professional light theme, optimized for enterprise cybersecurity risk
+                  analysis and SOC dashboard operations.
                 </div>
               </div>
-              <Badge tone="info">On</Badge>
+              <Badge tone="info">Active</Badge>
             </div>
           </div>
         </Card>

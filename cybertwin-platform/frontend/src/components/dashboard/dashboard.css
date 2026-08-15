@@ -27,7 +27,7 @@
   height: 34px;
 
   border-radius: var(--radius-md);
-  background: var(--bg-elevated);
+  background: #F1F5F9;
   color: var(--text-muted);
 }
 
@@ -190,7 +190,7 @@
 
   padding: 11px 0;
 
-  border-bottom: 1px solid rgba(38, 50, 71, 0.5);
+  border-bottom: 1px solid var(--border);
 }
 
 .event-item:last-child {
@@ -297,6 +297,7 @@
   gap: 8px;
   font-size: 13px;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .teaser-card__title svg {

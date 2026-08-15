@@ -121,8 +121,8 @@ function buildGraph(result) {
       animated: !node.blocked && node.compromised,
       markerEnd: { type: MarkerType.ArrowClosed, width: 18, height: 18 },
       style: node.blocked
-        ? { stroke: "#dc2626", strokeWidth: 2 }
-        : { stroke: "#38bdf8", strokeWidth: 2 },
+        ? { stroke: "#D92D20", strokeWidth: 2 }
+        : { stroke: "#155EEF", strokeWidth: 2 },
     });
   });
 
@@ -133,7 +133,7 @@ function buildGraph(result) {
         source: hubId,
         target: node.id,
         markerEnd: { type: MarkerType.ArrowClosed, width: 14, height: 14 },
-        style: { stroke: "#33415c", strokeWidth: 1.5, strokeDasharray: "5 5" },
+        style: { stroke: "#C5D0DD", strokeWidth: 1.5, strokeDasharray: "5 5" },
       });
     });
   }
@@ -156,7 +156,7 @@ function AttackGraph({ result, onSelect }) {
           minZoom={0.3}
           maxZoom={1.6}
           nodesDraggable={false}
-          colorMode="dark"
+          colorMode="light"
           proOptions={{ hideAttribution: true }}
           onNodeClick={(_, node) => onSelect?.(node.data)}
           onPaneClick={() => onSelect?.(null)}

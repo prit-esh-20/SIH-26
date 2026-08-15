@@ -44,7 +44,7 @@
 
 .risk-category.is-selected {
   border-color: var(--accent);
-  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 0 2px rgba(21, 94, 239, 0.2);
 }
 
 .risk-category__head {
@@ -94,7 +94,7 @@
 
 .risk-detail-section + .risk-detail-section {
   padding-top: 14px;
-  border-top: 1px solid rgba(38, 50, 71, 0.6);
+  border-top: 1px solid var(--border);
 }
 
 .risk-detail-recommendation {
@@ -103,11 +103,11 @@
 
   padding: 12px 14px;
 
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  border: 1px solid #B2CCFF;
   border-radius: var(--radius-md);
   background: var(--accent-soft);
 
-  color: #7dd3fc;
+  color: var(--info);
   font-size: 12.5px;
 }
 

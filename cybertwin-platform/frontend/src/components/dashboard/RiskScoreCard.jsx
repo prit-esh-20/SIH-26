@@ -1,10 +1,10 @@
 import Card from "../common/Card";
 
 const SEVERITY_COLORS = {
-  low: "#22c55e",
-  medium: "#f59e0b",
-  high: "#f97316",
-  critical: "#dc2626",
+  low: "#16803C",
+  medium: "#B54708",
+  high: "#E65F00",
+  critical: "#B42318",
 };
 
 function RiskScoreCard({ score, severity, note }) {
@@ -12,7 +12,7 @@ function RiskScoreCard({ score, severity, note }) {
   const circumference = 2 * Math.PI * radius;
   const clamped = Math.max(0, Math.min(100, score));
   const dash = (clamped / 100) * circumference;
-  const color = SEVERITY_COLORS[severity] ?? "#38bdf8";
+  const color = SEVERITY_COLORS[severity] ?? "#155EEF";
 
   return (
     <Card
