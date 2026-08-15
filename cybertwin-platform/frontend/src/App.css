@@ -1,3 +1,7 @@
+/* =========================================================
+   Application Layout
+   ========================================================= */
+
 .app-layout {
   min-height: 100vh;
   display: flex;
@@ -18,6 +22,11 @@
   min-height: calc(100vh - var(--header-height));
 }
 
+
+/* =========================================================
+   Page Layout
+   ========================================================= */
+
 .page {
   display: flex;
   flex-direction: column;
@@ -25,6 +34,11 @@
   max-width: 1440px;
   margin: 0 auto;
 }
+
+
+/* =========================================================
+   Generic Section Grid
+   ========================================================= */
 
 .section-grid {
   display: grid;
@@ -48,6 +62,11 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+
+/* =========================================================
+   Section Headers
+   ========================================================= */
+
 .section-header {
   display: flex;
   align-items: center;
@@ -68,11 +87,151 @@
   font-size: 12px;
 }
 
+
+/* =========================================================
+   Dashboard Main Layout
+   =========================================================
+
+   Desktop:
+
+   ┌───────────────────────────────────────┬─────────────────┐
+   │ Risk Score + Risk Breakdown           │ ML + Evidence   │
+   │                                       │                 │
+   ├───────────────────────────────────────┤                 │
+   │ Attack Paths                          │ Security Events │
+   │                                       │                 │
+   └───────────────────────────────────────┴─────────────────┘
+
+   The left and right columns flow independently.
+   This prevents the tall Attack Paths card from creating
+   an artificial empty area.
+   ========================================================= */
+
+.dashboard-main-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 2fr)
+    minmax(300px, 1fr);
+
+  gap: 16px;
+
+  align-items: start;
+}
+
+.dashboard-main-grid > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+
+/* =========================================================
+   Dashboard Left Column
+   ========================================================= */
+
+.dashboard-main-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   Risk Overview
+   ========================================================= */
+
+.dashboard-risk-overview {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.1fr)
+    minmax(0, 1fr);
+
+  gap: 16px;
+
+  align-items: start;
+}
+
+.dashboard-risk-score,
+.dashboard-risk-breakdown {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   Attack Paths
+   ========================================================= */
+
+.dashboard-attack-paths {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   Dashboard Right Column
+   ========================================================= */
+
+.dashboard-main-right {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   ML + Blockchain
+   ========================================================= */
+
+.dashboard-risk-sidebar {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   Security Events
+   ========================================================= */
+
+.dashboard-security-events {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   Responsive — Large Tablet / Small Desktop
+   ========================================================= */
+
 @media (max-width: 1280px) {
   .grid-4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .dashboard-main-grid {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(280px, 0.8fr);
+  }
+
+  .dashboard-risk-overview {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+  }
 }
+
+
+/* =========================================================
+   Responsive — Tablet
+   ========================================================= */
 
 @media (max-width: 1024px) {
   .app-main {
@@ -86,16 +245,47 @@
   .grid-3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .dashboard-main-grid {
+    grid-template-columns:
+      minmax(0, 1fr);
+  }
+
+  .dashboard-main-right {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    align-items: start;
+  }
 }
+
+
+/* =========================================================
+   Responsive — Mobile
+   ========================================================= */
 
 @media (max-width: 768px) {
   .grid-2,
   .grid-3,
   .grid-4 {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns:
+      minmax(0, 1fr);
   }
 
   .app-content {
     padding: 16px 16px 32px;
+  }
+
+  .dashboard-risk-overview {
+    grid-template-columns:
+      minmax(0, 1fr);
+  }
+
+  .dashboard-main-right {
+    display: flex;
+    flex-direction: column;
   }
 }

@@ -7,6 +7,7 @@ import StatusIndicator from "../components/common/StatusIndicator";
 import DemoNotice from "../components/common/DemoNotice";
 import LoadingState from "../components/common/LoadingState";
 import ErrorState from "../components/common/ErrorState";
+
 import MetricCard from "../components/dashboard/MetricCard";
 import RiskScoreCard from "../components/dashboard/RiskScoreCard";
 import RiskBreakdown from "../components/dashboard/RiskBreakdown";
@@ -17,7 +18,14 @@ import MlInsights from "../components/dashboard/MlInsights";
 import BlockchainEvidence from "../components/dashboard/BlockchainEvidence";
 
 import { useAsync } from "../hooks/useAsync";
-import { getDashboardKpis, getRiskOverview, getAttackPaths, getSecurityEvents } from "../services/riskService";
+
+import {
+  getDashboardKpis,
+  getRiskOverview,
+  getAttackPaths,
+  getSecurityEvents,
+} from "../services/riskService";
+
 import { getOrganization } from "../services/organizationService";
 import { getTopBehavioralRisks } from "../services/mlService";
 import { getEvidence } from "../services/blockchainService";
@@ -39,31 +47,57 @@ function Dashboard() {
   const evidence = useAsync(() => getEvidence());
 
   const overviewData = overview.data;
+
   const breakdownCategories =
     overviewData?.categories?.filter((category) =>
-      ["identity", "network", "endpoint", "data", "privilege"].includes(category.id),
+      ["identity", "network", "endpoint", "data", "privilege"].includes(
+        category.id,
+      ),
     ) ?? [];
 
   return (
     <div className="page">
+      {/* =====================================================
+          PAGE HEADER
+          ===================================================== */}
+
       <PageTitle
         title="Cyber Risk Overview"
         subtitle="Monitor your organization's simulated cyber posture and attack exposure."
         actions={
           <>
-            <select className="select" defaultValue="apexfin" aria-label="Organization">
+            <select
+              className="select"
+              defaultValue="apexfin"
+              aria-label="Organization"
+            >
               <option value="apexfin">ApexFin Technologies</option>
             </select>
+
             {organization.loading ? (
-              <StatusIndicator tone="neutral" label="Digital Twin: Syncing…" />
+              <StatusIndicator
+                tone="neutral"
+                label="Digital Twin: Syncing…"
+              />
             ) : organization.data ? (
-              <StatusIndicator tone="success" label={`Digital Twin: ${organization.data.twinStatus}`} />
+              <StatusIndicator
+                tone="success"
+                label={`Digital Twin: ${organization.data.twinStatus}`}
+              />
             ) : null}
           </>
         }
       />
 
+      {/* =====================================================
+          DEMO NOTICE
+          ===================================================== */}
+
       <DemoNotice />
+
+      {/* =====================================================
+          KPI METRICS
+          ===================================================== */}
 
       <div className="section-grid grid-4">
         {kpis.loading || !kpis.data ? (
@@ -74,7 +108,10 @@ function Dashboard() {
             </div>
           ))
         ) : kpis.error ? (
-          <ErrorState title="Unable to load risk overview" onRetry={kpis.retry} />
+          <ErrorState
+            title="Unable to load risk overview"
+            onRetry={kpis.retry}
+          />
         ) : (
           kpis.data.map((kpi) => (
             <MetricCard
@@ -90,57 +127,101 @@ function Dashboard() {
         )}
       </div>
 
-      <div className="section-grid grid-2" style={{ alignItems: "start" }}>
-        <div>
-          {overview.loading || !overview.data ? (
-            <LoadingState />
-          ) : overview.error ? (
-            <ErrorState title="Unable to load risk overview" onRetry={overview.retry} />
-          ) : (
-            <RiskScoreCard
-              score={overviewData.overallRisk}
-              severity={overviewData.severity}
-            />
-          )}
+      {/* =====================================================
+          MAIN DASHBOARD
+          ===================================================== */}
+
+      <div className="dashboard-main-grid">
+        {/* ===================================================
+            LEFT COLUMN
+            =================================================== */}
+
+        <div className="dashboard-main-left">
+          {/* Risk Score + Risk Breakdown */}
+
+          <div className="dashboard-risk-overview">
+            <div className="dashboard-risk-score">
+              {overview.loading || !overview.data ? (
+                <LoadingState />
+              ) : overview.error ? (
+                <ErrorState
+                  title="Unable to load risk overview"
+                  onRetry={overview.retry}
+                />
+              ) : (
+                <RiskScoreCard
+                  score={overviewData.overallRisk}
+                  severity={overviewData.severity}
+                />
+              )}
+            </div>
+
+            <div className="dashboard-risk-breakdown">
+              {overview.loading || !overview.data ? (
+                <LoadingState />
+              ) : (
+                <RiskBreakdown categories={breakdownCategories} />
+              )}
+            </div>
+          </div>
+
+          {/* Attack Paths */}
+
+          <div className="dashboard-attack-paths">
+            {paths.loading ? (
+              <LoadingState variant="rows" />
+            ) : paths.error ? (
+              <ErrorState
+                title="Unable to load attack paths"
+                onRetry={paths.retry}
+              />
+            ) : (
+              <AttackPathSummary paths={paths.data} />
+            )}
+          </div>
         </div>
 
-        <div>
-          {overview.loading || !overview.data ? (
-            <LoadingState />
-          ) : (
-            <RiskBreakdown categories={breakdownCategories} />
-          )}
+        {/* ===================================================
+            RIGHT COLUMN
+            =================================================== */}
+
+        <div className="dashboard-main-right">
+          {/* ML + Blockchain */}
+
+          <div className="dashboard-risk-sidebar">
+            <MlInsights users={mlRisks.data} />
+            <BlockchainEvidence evidence={evidence.data} />
+          </div>
+
+          {/* Security Events */}
+
+          <div className="dashboard-security-events">
+            {events.loading ? (
+              <LoadingState variant="rows" />
+            ) : events.error ? (
+              <ErrorState
+                title="Unable to load security events"
+                onRetry={events.retry}
+              />
+            ) : (
+              <SecurityEvents events={events.data} />
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="section-grid grid-2" style={{ alignItems: "start" }}>
-        <MlInsights users={mlRisks.data} />
-        <BlockchainEvidence evidence={evidence.data} />
-      </div>
+      {/* =====================================================
+          QUICK ACTIONS
+          ===================================================== */}
 
-      <div className="section-grid grid-3">
-        <div className="span-2">
-          {paths.loading ? (
-            <LoadingState variant="rows" />
-          ) : paths.error ? (
-            <ErrorState title="Unable to load attack paths" onRetry={paths.retry} />
-          ) : (
-            <AttackPathSummary paths={paths.data} />
-          )}
-        </div>
-
-        <div>
-          {events.loading ? (
-            <LoadingState variant="rows" />
-          ) : events.error ? (
-            <ErrorState title="Unable to load security events" onRetry={events.retry} />
-          ) : (
-            <SecurityEvents events={events.data} />
-          )}
-        </div>
-      </div>
-
-      <Card title="Quick Actions" action={<Badge tone="neutral">Recommended workflow</Badge>}>
+      <Card
+        title="Quick Actions"
+        action={
+          <Badge tone="neutral">
+            Recommended workflow
+          </Badge>
+        }
+      >
         <QuickActions />
       </Card>
     </div>
