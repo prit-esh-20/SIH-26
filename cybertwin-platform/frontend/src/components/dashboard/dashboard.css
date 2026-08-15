@@ -1,0 +1,375 @@
+/* ============ Metric Card ============ */
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.metric-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.metric-card__label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.metric-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+}
+
+.metric-card__value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.metric-card__number {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.metric-card__unit {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.metric-card__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ============ Risk Score Gauge ============ */
+.risk-gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.risk-gauge__svg {
+  width: 100%;
+  max-width: 220px;
+}
+
+.risk-gauge__center {
+  text-align: center;
+}
+
+.risk-gauge__number {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.risk-gauge__of {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.risk-gauge__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.risk-gauge__note {
+  color: var(--text-muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* ============ Risk Breakdown ============ */
+.risk-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.risk-breakdown__row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.risk-breakdown__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.risk-breakdown__name {
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.risk-breakdown__score {
+  color: var(--text-primary);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+/* ============ Attack Path Summary ============ */
+.attack-path-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.attack-path-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 12px 14px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.attack-path-item__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.attack-path-item__name {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.attack-path-item__badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.attack-path-item__desc {
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+
+/* ============ Security Events ============ */
+.event-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 11px 0;
+
+  border-bottom: 1px solid rgba(38, 50, 71, 0.5);
+}
+
+.event-item:last-child {
+  border-bottom: none;
+}
+
+.event-item__time {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.event-item__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-item__name {
+  color: var(--text-primary);
+  font-size: 12.5px;
+  font-weight: 500;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============ Quick Actions ============ */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quick-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 16px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+
+  color: var(--text-secondary);
+
+  text-align: left;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.quick-action:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.quick-action__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.quick-action__title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.quick-action__hint {
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+
+/* ============ ML + Blockchain teasers ============ */
+.teaser-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.teaser-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.teaser-card__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.teaser-card__title svg {
+  color: var(--accent);
+}
+
+.ml-score-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ml-score-row .progress-bar {
+  flex: 1;
+}
+
+.ml-signal {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: var(--text-secondary);
+  font-size: 11.5px;
+}
+
+.ml-signal::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--warning);
+  flex-shrink: 0;
+}
+
+.ml-confidence {
+  margin-top: 6px;
+}
+
+.evidence-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.evidence-row__label {
+  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.evidence-row__value {
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+@media (max-width: 1024px) {
+  .quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .quick-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
