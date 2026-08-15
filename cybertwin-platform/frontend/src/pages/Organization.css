@@ -1,7 +1,11 @@
+/* =========================================================
+   Organization Profile
+   ========================================================= */
+
 .org-profile {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr);
+  gap: 32px;
   align-items: center;
 }
 
@@ -13,8 +17,8 @@
 }
 
 .org-profile__logo {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
 
   display: flex;
   align-items: center;
@@ -28,84 +32,239 @@
 }
 
 .org-profile__name {
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--text-primary);
 }
 
 .org-profile__desc {
   color: var(--text-secondary);
   font-size: 12.5px;
-  max-width: 620px;
+  line-height: 1.6;
+  max-width: 680px;
 }
+
+
+/* =========================================================
+   Organization Metadata
+   ========================================================= */
 
 .org-profile__meta {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
+
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
 }
+
+.org-profile__meta .key-value {
+  min-height: 36px;
+}
+
+.org-profile__meta .key-value + .key-value {
+  border-top: 1px solid var(--border);
+}
+
+
+/* =========================================================
+   Tabs / Actions
+   ========================================================= */
 
 .org-tabs-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+
+  gap: 16px;
   flex-wrap: wrap;
 }
 
+
+/* =========================================================
+   Organization Overview
+   ========================================================= */
+
 .org-overview-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-  gap: 18px;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1.6fr);
+
+  gap: 16px;
+
+  align-items: start;
 }
+
+
+/* =========================================================
+   Overview Metric Cards
+   ========================================================= */
+
+.org-overview-grid > .section-grid {
+  align-items: stretch;
+}
+
+.org-overview-grid > .section-grid > .metric-card {
+  min-width: 0;
+  min-height: 140px;
+}
+
+
+/* =========================================================
+   Departments
+   ========================================================= */
 
 .department-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .department-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
 
-  padding: 10px 12px;
+  gap: 16px;
+
+  min-height: 48px;
+  padding: 10px 14px;
 
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+
   background: var(--bg-secondary);
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.department-row:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
 }
 
 .department-row__name {
   display: flex;
   align-items: center;
-  gap: 9px;
+
+  gap: 10px;
+
   color: var(--text-primary);
   font-size: 12.5px;
-  font-weight: 500;
+  font-weight: 600;
+
+  flex-shrink: 0;
 }
 
 .department-row__name svg {
+  width: 16px;
+  height: 16px;
   color: var(--accent);
 }
 
 .department-row__count {
+  min-width: 0;
+
   color: var(--text-muted);
   font-size: 11.5px;
+  line-height: 1.4;
+
+  text-align: right;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+
+/* =========================================================
+   Sensitive Data Note
+   ========================================================= */
 
 .data-tab-note {
   margin-top: 14px;
 }
 
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
 @media (max-width: 1024px) {
   .org-profile {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .org-profile__meta {
+    padding-left: 0;
+    border-left: none;
+
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+
+  .org-profile__meta .key-value {
+    min-height: 40px;
   }
 
   .org-overview-grid {
     grid-template-columns: 1fr;
+  }
+
+  .org-overview-grid > .section-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .org-profile {
+    gap: 16px;
+  }
+
+  .org-profile__logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .org-profile__name {
+    font-size: 18px;
+  }
+
+  .org-profile__desc {
+    font-size: 12px;
+  }
+
+  .org-overview-grid > .section-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .org-tabs-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .department-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .department-row__count {
+    width: 100%;
+    text-align: left;
+    white-space: normal;
   }
 }
