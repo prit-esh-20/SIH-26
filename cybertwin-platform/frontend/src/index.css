@@ -47,12 +47,18 @@
   --info-soft: #E8F1FF;
 
   /* Sidebar */
-  --sidebar-bg: #0F1B2D;
-  --sidebar-hover: #182842;
-  --sidebar-active: #163A63;
-  --sidebar-border: #1E3250;
-  --sidebar-text: #94A3B8;
-  --sidebar-text-active: #FFFFFF;
+  --sidebar-bg: #EEF3F8;
+  --sidebar-hover: #E2EAF3;
+  --sidebar-active: #DCEBFA;
+  --sidebar-border: #D7E0EA;
+  --sidebar-text: #64748B;
+  --sidebar-text-active: #155EEF;
+  --sidebar-brand: #102A43;
+  --sidebar-brand-subtitle: #64748B;
+  --sidebar-icon: #64748B;
+  --sidebar-icon-active: #155EEF;
+  --sidebar-footer: #64748B;
+  --sidebar-system-status: #16803C;
 
   /* Radii */
   --radius-sm: 6px;
@@ -60,7 +66,7 @@
   --radius-lg: 12px;
 
   /* Layout */
-  --sidebar-width: 240px;
+  --sidebar-width: 184px;
   --header-height: 64px;
 
   /* Elevation */

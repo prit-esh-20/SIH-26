@@ -90,7 +90,7 @@ function Dashboard() {
         )}
       </div>
 
-      <div className="section-grid grid-3">
+      <div className="section-grid grid-2" style={{ alignItems: "start" }}>
         <div>
           {overview.loading || !overview.data ? (
             <LoadingState />
@@ -111,11 +111,11 @@ function Dashboard() {
             <RiskBreakdown categories={breakdownCategories} />
           )}
         </div>
+      </div>
 
-        <div className="section-grid" style={{ gridTemplateColumns: "1fr" }}>
-          <MlInsights users={mlRisks.data} />
-          <BlockchainEvidence evidence={evidence.data} />
-        </div>
+      <div className="section-grid grid-2" style={{ alignItems: "start" }}>
+        <MlInsights users={mlRisks.data} />
+        <BlockchainEvidence evidence={evidence.data} />
       </div>
 
       <div className="section-grid grid-3">
