@@ -1,0 +1,46 @@
+# ==============================
+# Node modules
+# ==============================
+/node_modules/
+
+# ==============================
+# Build / Compilation output
+# ==============================
+/dist/
+/bundle/
+
+# ==============================
+# Hardhat
+# ==============================
+/artifacts/
+/cache/
+/types/
+/coverage/
+/ignition/deployments/
+
+# ==============================
+# Environment & Secrets
+# ==============================
+.env
+.env.*
+!.env.example
+
+# ==============================
+# Hardhat snapshots
+# ==============================
+/.gas-snapshot
+/snapshots/
+
+# ==============================
+# Logs
+# ==============================
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# ==============================
+# OS files
+# ==============================
+.DS_Store
+Thumbs.db
