@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.endpoints import organization, dashboard, security_controls, simulation
+from app.api.endpoints import organization, dashboard, security_controls, simulation, risk
 
 api_router = APIRouter()
 api_router.include_router(organization.router, tags=["organization"])
@@ -16,4 +16,8 @@ api_router.include_router(
 api_router.include_router(
     simulation.router,
     tags=["simulation"]
+)
+api_router.include_router(
+    risk.router,
+    tags=["risk"]
 )
