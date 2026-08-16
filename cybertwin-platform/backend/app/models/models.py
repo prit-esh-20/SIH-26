@@ -121,7 +121,7 @@ class Simulation(Base):
     scenario_id = Column(String(50), nullable=False)
     user_id = Column(String(50), ForeignKey("users.id"), nullable=False)
     mfa_enabled = Column(Boolean, nullable=False)
-    additional_control_id = Column(String(50), ForeignKey("security_controls.id"), nullable=False)  # FK to security_controls
+    additional_control_id = Column(String(50), ForeignKey("security_controls.id"), nullable=True)  # FK to security_controls
     is_counterfactual = Column(Boolean, default=False, nullable=False)
     parent_simulation_id = Column(String(50), ForeignKey("simulations.id"), nullable=True)
     risk_score = Column(Integer, nullable=False)
