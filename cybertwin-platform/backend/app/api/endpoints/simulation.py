@@ -1,9 +1,11 @@
 import random
+import httpx
+import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.models.models import User, Simulation
+from app.models.models import User, Simulation, BlockchainEvidence
 from app.core.simulation_engine import simulate_attack, simulate_counterfactual, SCENARIO_DEFS
 from app.schemas.simulation import (
     ScenarioResponse,
@@ -12,8 +14,62 @@ from app.schemas.simulation import (
     SimulationRequest,
     CounterfactualRequest
 )
+from app.api.endpoints.ml import USER_BEHAVIORAL_PROFILES, DEFAULT_BEHAVIOR
 
 router = APIRouter()
+
+def _record_to_blockchain(sim_id: str, scenario_id: str, user_id: str, db: Session, risk_val: int):
+    profile = USER_BEHAVIORAL_PROFILES.get(user_id, DEFAULT_BEHAVIOR)
+    ml_payload = {
+        "user_id": user_id,
+        **profile
+    }
+
+    ml_res = None
+    try:
+        with httpx.Client() as client:
+            ml_response = client.post("http://127.0.0.1:8001/predict", json=ml_payload, timeout=5.0)
+            if ml_response.status_code == 200:
+                ml_res = ml_response.json()
+            else:
+                print(f"Blockchain audit skipped for simulation {sim_id} because ML prediction service was unavailable.")
+                return
+    except Exception as e:
+        print(f"Blockchain audit skipped for simulation {sim_id} because ML prediction service was unavailable.")
+        return
+
+    if not ml_res:
+        print(f"Blockchain audit skipped for simulation {sim_id} because ML prediction service was unavailable.")
+        return
+
+    try:
+        with httpx.Client() as client:
+            bc_response = client.post("http://127.0.0.1:8002/record", json=ml_res, timeout=5.0)
+            if bc_response.status_code == 200:
+                bc_data = bc_response.json()
+                timestamp_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M UTC")
+
+                try:
+                    db_bc = BlockchainEvidence(
+                        simulation_id=sim_id,
+                        event=f"{ml_res['risk_level']} Risk Event",
+                        timestamp=timestamp_str,
+                        integrity="Verified",
+                        hash=bc_data.get("eventId", ""),
+                        ledger="Confirmed",
+                        block=0,
+                        description=f"Transaction hash: {bc_data.get('transactionHash', '')}"
+                    )
+                    db.add(db_bc)
+                    db.commit()
+                    print(f"Successfully recorded simulation {sim_id} on blockchain.")
+                except Exception as db_err:
+                    db.rollback()
+                    print(f"Database write failed for blockchain evidence mapping for simulation {sim_id}: {db_err}")
+            else:
+                print(f"Blockchain wrapper returned error status {bc_response.status_code}: {bc_response.text}")
+    except Exception as e:
+        print(f"Blockchain record failed for simulation {sim_id}: {e}")
 
 SCENARIO_DESCRIPTIONS = {
     "credentialLeak": "An attacker obtains a valid user's credentials and uses them to move laterally through the network toward sensitive data.",
@@ -131,6 +187,8 @@ def run_simulation(request: SimulationRequest, db: Session = Depends(get_db)):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database transaction failed: {e}")
+
+    _record_to_blockchain(sim_id, request.scenario_id, request.user_id, db, result["risk"])
 
     db.refresh(db_sim)
     return _map_to_response(db_sim)

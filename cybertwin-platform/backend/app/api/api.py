@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.endpoints import organization, dashboard, security_controls, simulation, risk, ml
+from app.api.endpoints import organization, dashboard, security_controls, simulation, risk, ml, blockchain
 
 api_router = APIRouter()
 api_router.include_router(organization.router, tags=["organization"])
@@ -24,4 +24,8 @@ api_router.include_router(
 api_router.include_router(
     ml.router,
     tags=["ml"]
+)
+api_router.include_router(
+    blockchain.router,
+    tags=["blockchain"]
 )
