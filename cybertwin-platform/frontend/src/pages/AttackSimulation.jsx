@@ -37,6 +37,7 @@ function AttackSimulation() {
   const [counterfactual, setCounterfactual] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
   const [evidence, setEvidence] = useState(null);
+  const [formConfig, setFormConfig] = useState(null);
 
   const refreshEvidence = (simulationId) => {
     getEvidence(simulationId).then(setEvidence);
@@ -78,6 +79,14 @@ function AttackSimulation() {
     document.getElementById("sim-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
+  const handleEmptyRun = () => {
+    if (formConfig?.scenarioId && formConfig?.userId) {
+      handleRun(formConfig);
+    } else {
+      scrollToForm();
+    }
+  };
+
   return (
     <div className="page">
       <PageTitle
@@ -103,6 +112,7 @@ function AttackSimulation() {
                 users={users.data}
                 running={running}
                 onRun={handleRun}
+                onConfigChange={setFormConfig}
               />
             )}
           </div>
@@ -129,7 +139,7 @@ function AttackSimulation() {
               title="No simulations yet"
               text="Run your first attack simulation to analyze organizational risk."
               action={
-                <Button variant="primary" size="sm" icon={PlayCircle} onClick={scrollToForm}>
+                <Button variant="primary" size="sm" icon={PlayCircle} onClick={handleEmptyRun}>
                   Run Simulation
                 </Button>
               }

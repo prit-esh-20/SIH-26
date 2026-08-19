@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlayCircle, Sparkles } from "lucide-react";
 
 import Card from "../common/Card";
@@ -15,12 +15,16 @@ const DEFAULT_CONTROLS = [
   { id: "vpnAuthentication", name: "VPN Authentication" },
 ];
 
-function SimulationForm({ scenarios, users, running, onRun }) {
+function SimulationForm({ scenarios, users, running, onRun, onConfigChange }) {
   const [scenarioId, setScenarioId] = useState("");
   const [userId, setUserId] = useState("");
   const [mfa, setMfa] = useState(false);
   const [control, setControl] = useState("none");
   const [loadedData, setLoadedData] = useState({ scenarios: null, users: null });
+
+  useEffect(() => {
+    onConfigChange({ scenarioId, userId, mfa, control });
+  }, [scenarioId, userId, mfa, control, onConfigChange]);
 
   // Adjust selections once the async option lists arrive (render-phase sync).
   if (loadedData.scenarios !== scenarios || loadedData.users !== users) {
