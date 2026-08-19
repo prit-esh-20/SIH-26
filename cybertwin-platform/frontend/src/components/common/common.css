@@ -357,6 +357,10 @@
   background: var(--accent);
 }
 
+.progress-bar__fill--success {
+  background: var(--success);
+}
+
 /* ============ Switch ============ */
 .switch {
   position: relative;
