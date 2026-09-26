@@ -61,6 +61,7 @@ export default function Map() {
         <ContextItem label="Depth" value={`${(well?.depth ?? 0).toLocaleString("en-IN")} m`} />
         <ContextItem label="Formation" value={well?.formation ?? "-"} />
         <ContextItem label="Radius" value={`${filters.radius} km`} />
+        <ContextItem label="Region" value="Assam, India" />
         <span className="ml-auto flex items-center gap-2 text-[11px] text-wl-text-muted">
           <MapIcon size={12} />
           Representative prototype data

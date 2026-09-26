@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from "react";
-import { Circle, MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { useEffect, useMemo, useRef } from "react";
+import { Circle, MapContainer, Marker, Pane, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import { Map as MapIcon } from "lucide-react";
 import SectionHeader from "../common/SectionHeader.jsx";
@@ -15,6 +15,13 @@ const SEVERITY_COLOR = {
   Medium: "#b97800",
   Low: "#3f7d55",
 };
+
+// Representative prototype center for Assam, India (Upper Assam).
+// Not an actual operational well location.
+const ASSAM_CENTER = [27.48, 95.32];
+// Soft viewport bounds around Northeast India so the initial view stays in
+// context; panning/zooming beyond remains possible (maxBoundsViscosity < 1).
+const ASSAM_BOUNDS = L.latLngBounds([26.4, 93.8], [28.6, 96.6]);
 
 function dotIcon(color, size = 13) {
   return L.divIcon({
@@ -38,7 +45,15 @@ function labeledIcon(id, color, textColor = "#ffffff") {
 
 function FitBounds({ positions }) {
   const map = useMap();
+  const isFirst = useRef(true);
   useEffect(() => {
+    // Initial view: show enough of Assam for regional context. Later filter
+    // changes re-fit to the visible well cluster.
+    if (isFirst.current) {
+      isFirst.current = false;
+      map.setView(ASSAM_CENTER, 11);
+      return;
+    }
     if (positions.length > 1) {
       map.fitBounds(L.latLngBounds(positions), { padding: [46, 46] });
     } else if (positions.length === 1) {
@@ -85,16 +100,24 @@ export default function MapView({ activeWellId, visibleWells, selectedWellId, on
         icon={MapIcon}
         title="Operational Map"
         actions={
-          <span className="text-[10.5px] text-wl-text-muted">
-            {visibleWells.length} wells within {filters.radius} km
-            {filters.layers.density ? " · density layer on" : ""}
+          <span className="flex items-center gap-3 text-[10.5px] text-wl-text-muted">
+            <span className="font-semibold uppercase tracking-[0.12em] text-wl-text-secondary">
+              Assam, India
+            </span>
+            <span>
+              {visibleWells.length} prototype wells within {filters.radius} km
+              {filters.layers.density ? " · density layer on" : ""}
+            </span>
           </span>
         }
       />
       <div className="h-[460px] w-full">
         <MapContainer
-          center={current.coordinates}
-          zoom={12}
+          center={ASSAM_CENTER}
+          zoom={11}
+          minZoom={9}
+          maxBounds={ASSAM_BOUNDS}
+          maxBoundsViscosity={0.6}
           scrollWheelZoom={false}
           className="h-full w-full"
         >
@@ -104,33 +127,40 @@ export default function MapView({ activeWellId, visibleWells, selectedWellId, on
             maxZoom={19}
           />
 
-          {/* Radius ring */}
-          <Circle
-            center={current.coordinates}
-            radius={filters.radius * 1000}
-            pathOptions={{ color: "#E8751A", weight: 1, opacity: 0.35, fillOpacity: 0.03, dashArray: "4 6" }}
-          />
+          {/* Radius ring renders in a custom pane beneath markers so dense
+              shading never covers well labels. */}
+          <Pane name="wl-under" style={{ zIndex: 350 }}>
+            <Circle
+              center={current.coordinates}
+              radius={filters.radius * 1000}
+              pathOptions={{ color: "#E8751A", weight: 1, opacity: 0.35, fillOpacity: 0.03, dashArray: "4 6" }}
+            />
+          </Pane>
 
-          {/* Historical event density layer: restrained circles weighted by NPT */}
-          {filters.layers.density &&
-            visibleWells.map((c) => {
-              const w = getWell(c.wellId);
-              const events = getEventsForWell(c.wellId);
-              const npt = events.reduce((s, e) => s + e.nptHours, 0);
-              if (!npt) return null;
-              return (
-                <Circle
-                  key={`density-${c.wellId}`}
-                  center={w.coordinates}
-                  radius={900 + npt * 140}
-                  pathOptions={{
-                    stroke: false,
-                    fillColor: "#C84435",
-                    fillOpacity: Math.min(0.06 + events.length * 0.045, 0.24),
-                  }}
-                />
-              );
-            })}
+          {/* Historical event density layer: restrained shading weighted by
+              recorded event count. Rendered beneath markers and labels. */}
+          {filters.layers.density && (
+            <Pane name="wl-under-density" style={{ zIndex: 351 }}>
+              {visibleWells.map((c) => {
+                const w = getWell(c.wellId);
+                const events = getEventsForWell(c.wellId);
+                if (!events.length) return null;
+                return (
+                  <Circle
+                    key={`density-${c.wellId}`}
+                    center={w.coordinates}
+                    radius={520 + events.length * 200}
+                    pathOptions={{
+                      stroke: false,
+                      fillColor: "#C84435",
+                      fillOpacity: Math.min(0.04 + events.length * 0.02, 0.1),
+                    }}
+                    interactive={false}
+                  />
+                );
+              })}
+            </Pane>
+          )}
 
           {/* Comparable wells */}
           {filters.layers.wells &&

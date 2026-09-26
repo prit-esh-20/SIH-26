@@ -9,6 +9,9 @@
 
 // ---------------------------------------------------------------------------
 // Wells
+// Representative prototype coordinates for Assam, India (Upper Assam,
+// Dibrugarh/Tinsukia belt). Not actual operational well locations.
+// Offsets from W-205 are computed so displayed distances (km) match geography.
 // ---------------------------------------------------------------------------
 
 export const wells = [
@@ -19,8 +22,8 @@ export const wells = [
     plannedTd: 3200,
     formation: "F3",
     holeSection: '8-1/2"',
-    location: "Representative block, Field A",
-    coordinates: [26.7812, 94.9824],
+    location: "Prototype Field, Assam",
+    coordinates: [27.48, 95.32],
     lastUpdate: "14:32:18",
     rig: "Rig 7",
     spudDate: "2026-08-02",
@@ -32,8 +35,8 @@ export const wells = [
     plannedTd: 3100,
     formation: "F3",
     holeSection: '8-1/2"',
-    location: "Representative block, Field A",
-    coordinates: [26.7962, 94.9942],
+    location: "Prototype Field, Assam",
+    coordinates: [27.4953, 95.3262],
     lastUpdate: "11:05:40",
     rig: "Rig 4",
     spudDate: "2026-05-19",
@@ -45,8 +48,8 @@ export const wells = [
     plannedTd: 3040,
     formation: "F3",
     holeSection: '7"',
-    location: "Representative block, Field A",
-    coordinates: [26.7689, 95.0087],
+    location: "Prototype Field, Assam",
+    coordinates: [27.455, 95.3362],
     lastUpdate: "09:47:03",
     rig: "Rig 2",
     spudDate: "2026-03-08",
@@ -58,8 +61,8 @@ export const wells = [
     plannedTd: 3120,
     formation: "F4",
     holeSection: '7"',
-    location: "Representative block, Field A",
-    coordinates: [26.7547, 94.9683],
+    location: "Prototype Field, Assam",
+    coordinates: [27.4453, 95.2927],
     lastUpdate: "17:22:55",
     rig: "Rig 5",
     spudDate: "2025-11-14",
@@ -71,8 +74,8 @@ export const wells = [
     plannedTd: 2905,
     formation: "F3",
     holeSection: '8-1/2"',
-    location: "Representative block, Field A",
-    coordinates: [26.8034, 94.9715],
+    location: "Prototype Field, Assam",
+    coordinates: [27.4917, 95.2972],
     lastUpdate: "16:12:09",
     rig: "Rig 3",
     spudDate: "2025-09-30",
@@ -84,8 +87,8 @@ export const wells = [
     plannedTd: 3185,
     formation: "F4",
     holeSection: '7"',
-    location: "Representative block, Field A",
-    coordinates: [26.7602, 95.0261],
+    location: "Prototype Field, Assam",
+    coordinates: [27.4892, 95.3789],
     lastUpdate: "13:58:31",
     rig: "Rig 1",
     spudDate: "2025-07-22",

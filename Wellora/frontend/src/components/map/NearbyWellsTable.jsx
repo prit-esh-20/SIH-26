@@ -82,7 +82,7 @@ export default function NearbyWellsTable({ wells, selectedWellId, onSelect }) {
         </table>
       </div>
       <div className="border-t border-wl-border px-4 py-2.5 text-[10px] leading-relaxed text-wl-text-muted">
-        Representative prototype data. Production deployment would use authorized operator datasets.
+        Representative prototype data for Assam, India. Production deployment would use authorized operator datasets.
       </div>
     </section>
   );

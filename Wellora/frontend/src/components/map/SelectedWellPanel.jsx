@@ -53,10 +53,7 @@ export default function SelectedWellPanel({ activeWellId, selectedWellId, onView
             <Kv label="Total Depth" value={`${(well.depth ?? 0).toLocaleString("en-IN")} m`} />
             <Kv label="Status" value={well.status} />
             <Kv label="Historical Events" value={String(events.length)} />
-            <Kv
-              label="Relevant Interval"
-              value={`${entry.relevantInterval[0].toLocaleString("en-IN")} - ${entry.relevantInterval[1].toLocaleString("en-IN")} m`}
-            />
+            <Kv label="Region" value="Assam, India" />
           </div>
 
           <div className="mt-4">
