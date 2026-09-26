@@ -19,9 +19,6 @@ const SEVERITY_COLOR = {
 // Representative prototype center for Assam, India (Upper Assam).
 // Not an actual operational well location.
 const ASSAM_CENTER = [27.48, 95.32];
-// Soft viewport bounds around Northeast India so the initial view stays in
-// context; panning/zooming beyond remains possible (maxBoundsViscosity < 1).
-const ASSAM_BOUNDS = L.latLngBounds([26.4, 93.8], [28.6, 96.6]);
 
 function dotIcon(color, size = 13) {
   return L.divIcon({
@@ -43,23 +40,17 @@ function labeledIcon(id, color, textColor = "#ffffff") {
   });
 }
 
-function FitBounds({ positions }) {
+// Sets the initial Assam view once. Never re-fits afterwards: user zoom and
+// pan are respected across well selection, filter changes and layer toggles.
+function InitialView() {
   const map = useMap();
-  const isFirst = useRef(true);
+  const done = useRef(false);
   useEffect(() => {
-    // Initial view: show enough of Assam for regional context. Later filter
-    // changes re-fit to the visible well cluster.
-    if (isFirst.current) {
-      isFirst.current = false;
-      map.setView(ASSAM_CENTER, 11);
-      return;
+    if (!done.current) {
+      done.current = true;
+      map.setView(ASSAM_CENTER, 10);
     }
-    if (positions.length > 1) {
-      map.fitBounds(L.latLngBounds(positions), { padding: [46, 46] });
-    } else if (positions.length === 1) {
-      map.setView(positions[0], 13);
-    }
-  }, [map, positions]);
+  }, [map]);
   return null;
 }
 
@@ -87,11 +78,6 @@ export default function MapView({ activeWellId, visibleWells, selectedWellId, on
     return markers;
   }, [visibleWells, filters.layers.events, filters.event]);
 
-  const positions = useMemo(() => {
-    if (!current) return [];
-    return [current.coordinates, ...visibleWells.map((c) => getWell(c.wellId)?.coordinates).filter(Boolean)];
-  }, [current, visibleWells]);
-
   if (!current) return null;
 
   return (
@@ -114,10 +100,9 @@ export default function MapView({ activeWellId, visibleWells, selectedWellId, on
       <div className="h-[460px] w-full">
         <MapContainer
           center={ASSAM_CENTER}
-          zoom={11}
-          minZoom={9}
-          maxBounds={ASSAM_BOUNDS}
-          maxBoundsViscosity={0.6}
+          zoom={10}
+          minZoom={4}
+          maxZoom={18}
           scrollWheelZoom={false}
           className="h-full w-full"
         >
@@ -219,7 +204,7 @@ export default function MapView({ activeWellId, visibleWells, selectedWellId, on
             </Marker>
           ))}
 
-          <FitBounds positions={positions} />
+          <InitialView />
         </MapContainer>
       </div>
     </section>
