@@ -9,6 +9,7 @@ const PAGE_TITLES = {
   "/dashboard": "Dashboard",
   "/wells/intelligence": "Well Intelligence",
   "/map": "Map",
+  "/events": "Historical Events",
 };
 
 export default function Topbar({ title }) {
