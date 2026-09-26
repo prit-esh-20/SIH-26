@@ -17,7 +17,7 @@ const SEVERITY_SOFT_BG = {
   Low: "#EAF2EC",
 };
 
-export default function RiskAlert({ onOpenEvidence }) {
+export default function RiskAlert({ onOpenEvidence, onOpenComparableWells }) {
   const { activeWellId } = useWellContext();
   const alerts = getRiskAlerts(activeWellId);
   const [expanded, setExpanded] = useState(true);
@@ -34,7 +34,7 @@ export default function RiskAlert({ onOpenEvidence }) {
   }
 
   const alert = alerts[0];
-  const color = SEVERITY_COLOR[alert.severity] ?? "#8d969b";
+  const color = SEVERITY_COLOR[alert.severity] ?? "#7b8581";
   const evidenceCount = getAlertEvidence(alert).length;
 
   return (
@@ -138,11 +138,7 @@ export default function RiskAlert({ onOpenEvidence }) {
             <FileText size={12} />
             View Evidence
           </button>
-          <button
-            type="button"
-            className="wl-btn"
-            onClick={() => onOpenEvidence(alert, { comparableWells: true })}
-          >
+          <button type="button" className="wl-btn" onClick={onOpenComparableWells}>
             <Layers size={12} />
             View Comparable Wells
           </button>

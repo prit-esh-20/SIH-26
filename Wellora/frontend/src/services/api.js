@@ -10,9 +10,9 @@ import {
   drillingParametersFallback,
   drillingTrends as mockTrends,
   drillingTrendsFallback,
-  formationContext,
   getComparableWells as getComparableWellsFromData,
   getEventsForWell as getEventsForWellFromData,
+  getFormationContext,
   getRiskAlerts as getRiskAlertsFromData,
   getWell as getWellFromData,
   wells as mockWells,
@@ -67,7 +67,7 @@ export async function fetchRiskAlerts(wellId) {
 }
 
 export async function fetchFormationContext(wellId) {
-  return formationContext;
+  return getFormationContext(wellId);
 }
 
 export { ENDPOINTS };

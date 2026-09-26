@@ -11,7 +11,7 @@ export default function EventDetailDrawer({ event, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[1400] bg-[#17201D]/35"
+          className="fixed inset-0 z-[1400] bg-[#17201D]/35 pointer-events-none"
           onClick={onClose}
         >
           <motion.aside
@@ -19,7 +19,7 @@ export default function EventDetailDrawer({ event, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: 420 }}
             transition={{ type: "tween", duration: 0.22, ease: "easeOut" }}
-            className="absolute right-0 top-0 flex h-full w-[400px] flex-col border-l border-wl-border-strong bg-wl-surface"
+            className="pointer-events-auto absolute right-0 top-0 flex h-full w-[400px] flex-col border-l border-wl-border-strong bg-wl-surface"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex h-[57px] shrink-0 items-center justify-between border-b border-wl-border px-5">

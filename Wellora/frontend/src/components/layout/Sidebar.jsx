@@ -11,18 +11,15 @@ import {
 } from "lucide-react";
 import { WelloraLogo } from "../brand/WelloraLogo.jsx";
 
-function NavItem({ to, icon: Icon, label, placeholder = false, end = false }) {
-  if (placeholder) {
+function NavItem({ to, icon: Icon, label, disabled = false, end = false }) {
+  if (disabled) {
     return (
       <div
-        title="Module planned for a later phase"
-        className="flex cursor-default items-center gap-2.5 rounded-[4px] px-3 py-[7px] text-[13px] font-medium text-wl-text-muted"
+        title="Module under development"
+        className="flex cursor-default items-center gap-2.5 rounded-[4px] px-3 py-[7px] text-[13px] font-medium text-wl-text-muted/70"
       >
         <Icon size={15} strokeWidth={1.8} />
         <span className="flex-1">{label}</span>
-        <span className="text-[9px] font-medium uppercase tracking-wider text-wl-text-muted/80">
-          Soon
-        </span>
       </div>
     );
   }
@@ -81,39 +78,29 @@ export default function Sidebar() {
         <NavItem to="/dashboard" icon={Activity} label="Overview" end />
 
         <NavGroup label="Wells">
-          <NavItem
-            to="/wells/intelligence"
-            icon={Layers}
-            label="Well Intelligence"
-            placeholder
-          />
+          <NavItem to="/wells/intelligence" icon={Layers} label="Well Intelligence" disabled />
         </NavGroup>
 
         <div className="mt-4">
-          <NavItem to="/map" icon={Map} label="Map" placeholder />
+          <NavItem to="/map" icon={Map} label="Map" disabled />
         </div>
 
         <NavGroup label="Knowledge">
-          <NavItem to="/knowledge/documents" icon={FileText} label="Documents" placeholder />
-          <NavItem
-            to="/knowledge/events"
-            icon={Database}
-            label="Historical Events"
-            placeholder
-          />
+          <NavItem to="/knowledge/documents" icon={FileText} label="Documents" disabled />
+          <NavItem to="/knowledge/events" icon={Database} label="Historical Events" disabled />
         </NavGroup>
 
         <div className="mt-4">
-          <NavItem to="/alerts" icon={Bell} label="Alerts" placeholder />
+          <NavItem to="/alerts" icon={Bell} label="Alerts" disabled />
         </div>
 
         <div className="mt-4">
-          <NavItem to="/reports" icon={FileBarChart} label="Reports" placeholder />
+          <NavItem to="/reports" icon={FileBarChart} label="Reports" disabled />
         </div>
       </nav>
 
       <div className="border-t border-wl-border px-2.5 py-3">
-        <NavItem to="/settings" icon={Settings} label="Settings" placeholder />
+        <NavItem to="/settings" icon={Settings} label="Settings" disabled />
         <div className="mt-1 flex items-center gap-2.5 rounded-[4px] px-3 py-[7px] text-[13px] font-medium text-wl-text-secondary">
           <span className="flex h-6 w-6 items-center justify-center rounded-[3px] bg-wl-accent-light text-[10px] font-semibold text-wl-accent-dark">
             DE

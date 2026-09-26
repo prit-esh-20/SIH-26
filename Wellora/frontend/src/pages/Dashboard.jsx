@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import CurrentWell from "../components/dashboard/CurrentWell.jsx";
 import RiskAlert from "../components/dashboard/RiskAlert.jsx";
 import NearbyWellsMap from "../components/map/NearbyWellsMap.jsx";
@@ -9,25 +9,20 @@ import FormationContext from "../components/dashboard/FormationContext.jsx";
 import ComparableWells from "../components/dashboard/ComparableWells.jsx";
 import DrillingCharts from "../components/dashboard/DrillingCharts.jsx";
 import EvidencePanel from "../components/dashboard/EvidencePanel.jsx";
+import ComparableWellsDrawer from "../components/dashboard/ComparableWellsDrawer.jsx";
 import { useWellContext } from "../context/WellContext.jsx";
-import { getRiskAlerts, getWell } from "../data/mockData.js";
+import { getRiskAlerts } from "../data/mockData.js";
 
 export default function Dashboard() {
   const { activeWellId } = useWellContext();
   const [evidenceOpen, setEvidenceOpen] = useState(false);
   const [activeAlert, setActiveAlert] = useState(null);
-
-  const well = getWell(activeWellId);
+  const [compsOpen, setCompsOpen] = useState(false);
 
   const handleOpenEvidence = (alert) => {
     setActiveAlert(alert);
     setEvidenceOpen(true);
   };
-
-  const formationNote = useMemo(() => {
-    if (!well) return "";
-    return `Current depth ${well.depth.toLocaleString("en-IN")} m in Formation ${well.formation}`;
-  }, [well]);
 
   return (
     <div className="mx-auto max-w-[1720px] space-y-4 pb-8">
@@ -38,7 +33,10 @@ export default function Dashboard() {
       {getRiskAlerts(activeWellId).length > 0 ? (
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
           <div className="xl:col-span-2">
-            <RiskAlert onOpenEvidence={handleOpenEvidence} />
+            <RiskAlert
+              onOpenEvidence={handleOpenEvidence}
+              onOpenComparableWells={() => setCompsOpen(true)}
+            />
           </div>
           <div className="xl:col-span-1">
             <DepthTimeline />
@@ -69,6 +67,11 @@ export default function Dashboard() {
         alert={activeAlert}
         open={evidenceOpen}
         onClose={() => setEvidenceOpen(false)}
+      />
+      <ComparableWellsDrawer
+        open={compsOpen}
+        onClose={() => setCompsOpen(false)}
+        activeWellId={activeWellId}
       />
     </div>
   );
