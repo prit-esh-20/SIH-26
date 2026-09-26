@@ -73,24 +73,29 @@ export default function WellIntelligence() {
       {/* Selected well */}
       <SelectedWellSummary selectedWellId={selectedWellId} />
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+      <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
         <SimilarityBreakdown selectedWellId={selectedWellId} />
         <WhyComparable selectedWellId={selectedWellId} />
       </div>
 
       <WellComparison selectedWellId={selectedWellId} selectedEvent={selectedEvent} />
 
-      {/* Events */}
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
-        <div className="xl:col-span-2">
+      {/* Events: left column stacks the timeline with event parameters so
+          heights stay content-driven and no artificial gap appears below the
+          shorter column. */}
+      <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-3">
+        <div className="space-y-4 xl:col-span-2">
           <HistoricalEventTimeline
             selectedWellId={selectedWellId}
             selectedEventId={activeEventId}
             onSelectEvent={setSelectedEventId}
           />
+          <EventParameters selectedEvent={selectedEvent} />
         </div>
         <div className="space-y-4">
-          {selectedEvent && <DepthCorrelation selectedWellId={selectedWellId} selectedEvent={selectedEvent} />}
+          {selectedEvent && (
+            <DepthCorrelation selectedWellId={selectedWellId} selectedEvent={selectedEvent} />
+          )}
           <SourceEvidenceCard
             selectedEvent={selectedEvent}
             onViewEvidence={() => setEvidenceOpen(true)}
@@ -98,9 +103,7 @@ export default function WellIntelligence() {
         </div>
       </div>
 
-      <EventParameters selectedEvent={selectedEvent} />
-
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-3">
         <div className="xl:col-span-2">
           <MitigationPanel selectedEvent={selectedEvent} />
         </div>
