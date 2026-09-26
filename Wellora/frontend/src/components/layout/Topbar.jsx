@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Bell, ChevronDown, Search } from "lucide-react";
 import { useWellContext } from "../../context/WellContext.jsx";
 import { StatusDot } from "../common/StatusIndicator.jsx";
 import { getWell, wells } from "../../data/mockData.js";
 
-export default function Topbar({ title = "Dashboard" }) {
+const PAGE_TITLES = {
+  "/dashboard": "Dashboard",
+  "/wells/intelligence": "Well Intelligence",
+};
+
+export default function Topbar({ title }) {
   const { activeWellId, setActiveWellId } = useWellContext();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const { pathname } = useLocation();
+  const pageTitle = title ?? PAGE_TITLES[pathname] ?? "Wellora";
 
   useEffect(() => {
     function onDocClick(e) {
@@ -22,7 +30,7 @@ export default function Topbar({ title = "Dashboard" }) {
   return (
     <header className="flex h-[60px] shrink-0 items-center justify-between border-b border-wl-border bg-wl-surface px-6">
       <div className="flex items-center gap-4">
-        <h1 className="text-[15px] font-semibold tracking-wide">{title}</h1>
+        <h1 className="text-[15px] font-semibold tracking-wide">{pageTitle}</h1>
         <span className="h-4 w-px bg-wl-border" />
         <span className="text-xs text-wl-text-muted">
           Nearby wells intelligence for the active well

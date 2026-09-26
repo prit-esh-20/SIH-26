@@ -177,11 +177,46 @@ export const drillingTrendsFallback = drillingTrends["W-205"];
 // Base offsets for W-205. Event counts are recomputed from the dataset at the
 // bottom of this file, so they always match historicalEvents.
 const comparableWellsBase = [
-  { wellId: "W-201", distanceKm: 1.8, formation: "F3", similarity: 87 },
-  { wellId: "W-198", distanceKm: 3.2, formation: "F3", similarity: 81 },
-  { wellId: "W-187", distanceKm: 4.7, formation: "F3", similarity: 72 },
-  { wellId: "W-176", distanceKm: 2.6, formation: "F3", similarity: 64 },
-  { wellId: "W-163", distanceKm: 5.9, formation: "F4", similarity: 31 },
+  {
+    wellId: "W-201",
+    distanceKm: 1.8,
+    formation: "F3",
+    similarity: 87,
+    relevantInterval: [2830, 2910],
+    similarityBreakdown: { geographic: 92, geological: 95, depth: 88, operational: 81, event: 79 },
+  },
+  {
+    wellId: "W-198",
+    distanceKm: 3.2,
+    formation: "F3",
+    similarity: 81,
+    relevantInterval: [2800, 2960],
+    similarityBreakdown: { geographic: 89, geological: 93, depth: 82, operational: 78, event: 68 },
+  },
+  {
+    wellId: "W-187",
+    distanceKm: 4.7,
+    formation: "F3",
+    similarity: 72,
+    relevantInterval: [2850, 3030],
+    similarityBreakdown: { geographic: 78, geological: 88, depth: 76, operational: 72, event: 55 },
+  },
+  {
+    wellId: "W-176",
+    distanceKm: 2.6,
+    formation: "F3",
+    similarity: 64,
+    relevantInterval: [2790, 2910],
+    similarityBreakdown: { geographic: 84, geological: 90, depth: 61, operational: 55, event: 34 },
+  },
+  {
+    wellId: "W-163",
+    distanceKm: 5.9,
+    formation: "F4",
+    similarity: 31,
+    relevantInterval: [3420, 3600],
+    similarityBreakdown: { geographic: 62, geological: 41, depth: 30, operational: 22, event: 12 },
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -204,6 +239,10 @@ export const historicalEvents = [
     document: "DDR-W201",
     page: 37,
     date: "2026-06-02",
+    params: { rop: 14.2, wob: 8.1, rpm: 118, torque: 12.5, mudWeight: 1.19, flowRate: 465, standpipe: 2820 },
+    whatHappened: "Losses were observed while drilling through the friable F3 sand.",
+    operationalResponse: "Reduced circulation rate and monitored returns.",
+    excerpt: "While drilling at approximately 2875 m in the F3 interval, partial returns were observed. Circulation was reduced and LCM treatment was initiated. Returns normalised after treatment and drilling continued.",
   },
   {
     id: "EV-002",
@@ -218,6 +257,10 @@ export const historicalEvents = [
     document: "WCR-W198",
     page: 112,
     date: "2026-03-21",
+    params: { rop: 12.6, wob: 9.2, rpm: 108, torque: 15.1, mudWeight: 1.22, flowRate: 445, standpipe: 2905 },
+    whatHappened: "Seepage losses developed while drilling the F3 sand.",
+    operationalResponse: "Circulation rate reduced and fine LCM added.",
+    excerpt: "Seepage losses were noted at approximately 2892 m in the F3 interval. Circulation was reduced and fine LCM added. Losses were controlled within one circulation.",
   },
   {
     id: "EV-003",
@@ -232,6 +275,10 @@ export const historicalEvents = [
     document: "DDR-W187",
     page: 58,
     date: "2025-12-09",
+    params: { rop: 11.4, wob: 9.8, rpm: 104, torque: 16.8, mudWeight: 1.18, flowRate: 440, standpipe: 2915 },
+    whatHappened: "The string became stuck while drilling the F3 sand.",
+    operationalResponse: "Pipe-freeing pill spotted with back-off precaution.",
+    excerpt: "The string became stuck at approximately 2910 m while drilling the F3 interval. A pipe-freeing pill was spotted and the string was freed after two attempts.",
   },
   {
     id: "EV-005",
@@ -246,6 +293,10 @@ export const historicalEvents = [
     document: "DDR-W187",
     page: 52,
     date: "2025-12-07",
+    params: { rop: 12.2, wob: 9.4, rpm: 106, torque: 15.6, mudWeight: 1.17, flowRate: 445, standpipe: 2880 },
+    whatHappened: "Tight spots were observed while tripping in the F3 interval.",
+    operationalResponse: "Reamed the interval and increased mud weight.",
+    excerpt: "Tight spots were noted at approximately 2884 m during tripping. The interval was reamed and mud weight was increased. Hole condition normalised.",
   },
   {
     id: "EV-006",
@@ -260,6 +311,10 @@ export const historicalEvents = [
     document: "DDR-W198",
     page: 87,
     date: "2026-03-28",
+    params: { rop: 9.9, wob: 9.5, rpm: 106, torque: 16.2, mudWeight: 1.26, flowRate: 435, standpipe: 3020 },
+    whatHappened: "A flow gain was detected while drilling near the base of F3.",
+    operationalResponse: "Well shut in, flow check performed, barriers reinstated.",
+    excerpt: "A gain was observed at approximately 2955 m. The well was shut in, a flow check performed and barriers reinstated. Kill mud was circulated before drilling resumed.",
   },
   {
     id: "EV-007",
@@ -274,6 +329,10 @@ export const historicalEvents = [
     document: "DDR-W176",
     page: 24,
     date: "2025-10-11",
+    params: { rop: 15.6, wob: 8.2, rpm: 118, torque: 12.8, mudWeight: 1.20, flowRate: 470, standpipe: 2830 },
+    whatHappened: "Seepage losses were observed while drilling F3.",
+    operationalResponse: "LCM treatment applied.",
+    excerpt: "Seepage losses were noted at approximately 2836 m in the F3 interval. LCM treatment was applied and the seepage stopped.",
   },
   {
     id: "EV-008",
@@ -288,6 +347,10 @@ export const historicalEvents = [
     document: "WCR-W187",
     page: 133,
     date: "2025-12-19",
+    params: { rop: 10.2, wob: 10.1, rpm: 102, torque: 17.4, mudWeight: 1.22, flowRate: 435, standpipe: 3025 },
+    whatHappened: "The string stuck while drilling shale with sand streaks.",
+    operationalResponse: "Jarred and spotted a free-off pill.",
+    excerpt: "The string stuck at approximately 3020 m. Jarring and a free-off pill freed the string. Drilling continued with adjusted parameters.",
   },
   {
     id: "EV-009",
@@ -302,6 +365,10 @@ export const historicalEvents = [
     document: "DDR-W201",
     page: 66,
     date: "2026-06-11",
+    params: { rop: 10.8, wob: 8.8, rpm: 112, torque: 14.9, mudWeight: 1.24, flowRate: 455, standpipe: 2940 },
+    whatHappened: "A flow gain was detected during a connection in the F3 interval.",
+    operationalResponse: "Well shut in and kill mud circulated per procedure.",
+    excerpt: "A flow gain was observed at approximately 2965 m during a connection. The well was shut in and kill-weight mud was circulated. The well was secured and drilling resumed.",
   },
   {
     id: "EV-012",
@@ -316,6 +383,10 @@ export const historicalEvents = [
     document: "DDR-W198",
     page: 64,
     date: "2026-03-18",
+    params: { rop: 13.8, wob: 8.9, rpm: 110, torque: 14.2, mudWeight: 1.20, flowRate: 450, standpipe: 2810 },
+    whatHappened: "Overpull and torque fluctuations were noted while drilling F3.",
+    operationalResponse: "Reamed while circulating to condition the hole.",
+    excerpt: "Elevated pickup weights were observed at approximately 2810 m. The interval was reamed while circulating and hole condition normalised.",
   },
   {
     id: "EV-013",
@@ -330,6 +401,10 @@ export const historicalEvents = [
     document: "DDR-W187",
     page: 55,
     date: "2025-12-08",
+    params: { rop: 12.9, wob: 9.2, rpm: 108, torque: 15.2, mudWeight: 1.18, flowRate: 445, standpipe: 2865 },
+    whatHappened: "Partial losses were observed while drilling the F3 sand.",
+    operationalResponse: "Reduced circulation rate with LCM treatment.",
+    excerpt: "Partial losses were recorded at approximately 2868 m in the F3 interval. Circulation was reduced and LCM treatment applied. Losses were controlled after treatment.",
   },
   {
     id: "EV-010",
@@ -344,6 +419,10 @@ export const historicalEvents = [
     document: "DDR-W163",
     page: 45,
     date: "2025-08-04",
+    params: { rop: 8.9, wob: 10.6, rpm: 98, torque: 18.2, mudWeight: 1.32, flowRate: 420, standpipe: 3480 },
+    whatHappened: "Bit balling was suspected from reduced ROP in compact sand.",
+    operationalResponse: "Cleanup run performed and ROP reduced.",
+    excerpt: "ROP reduction was observed at approximately 3495 m, consistent with bit balling. A cleanup run restored penetration rates.",
   },
   {
     id: "EV-011",
@@ -358,6 +437,10 @@ export const historicalEvents = [
     document: "DDR-W163",
     page: 49,
     date: "2025-08-09",
+    params: { rop: 8.4, wob: 10.8, rpm: 96, torque: 18.6, mudWeight: 1.34, flowRate: 415, standpipe: 3550 },
+    whatHappened: "Losses were observed while drilling the compact F5 sand.",
+    operationalResponse: "LCM treatment with reduced circulation rate.",
+    excerpt: "Losses were recorded at approximately 3560 m in the F5 interval. Circulation was reduced and LCM treatment applied. Losses were controlled.",
   },
 ];
 
@@ -558,4 +641,24 @@ export function getFormationContext(wellId) {
     historicalEvents: events.length,
     mostCommonEvent: mostCommon,
   };
+}
+
+// Comparable-well entry (distance, similarity, breakdown, relevant interval).
+export function getComparableEntry(wellId) {
+  return comparableWells.find((c) => c.wellId === wellId) ?? null;
+}
+
+export function getEventById(eventId) {
+  return historicalEvents.find((e) => e.id === eventId) ?? null;
+}
+
+// Summed historical non-productive time for a well, derived from its events.
+export function getTotalNptForWell(wellId) {
+  return historicalEvents
+    .filter((e) => e.wellId === wellId)
+    .reduce((sum, e) => sum + e.nptHours, 0);
+}
+
+export function getDocumentType(documentId) {
+  return documents.find((d) => d.id === documentId)?.type ?? "Document";
 }

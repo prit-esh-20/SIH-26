@@ -78,7 +78,7 @@ export default function Sidebar() {
         <NavItem to="/dashboard" icon={Activity} label="Overview" end />
 
         <NavGroup label="Wells">
-          <NavItem to="/wells/intelligence" icon={Layers} label="Well Intelligence" disabled />
+          <NavItem to="/wells/intelligence" icon={Layers} label="Well Intelligence" />
         </NavGroup>
 
         <div className="mt-4">
