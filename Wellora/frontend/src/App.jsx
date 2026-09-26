@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import DashboardLayout from "./components/layout/DashboardLayout.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import WellIntelligence from "./pages/WellIntelligence.jsx";
+import Map from "./pages/Map.jsx";
 
 export default function App() {
   return (
@@ -9,6 +10,7 @@ export default function App() {
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/wells/intelligence" element={<WellIntelligence />} />
+        <Route path="/map" element={<Map />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>
     </Routes>

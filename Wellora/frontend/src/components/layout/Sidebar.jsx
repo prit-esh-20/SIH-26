@@ -82,7 +82,7 @@ export default function Sidebar() {
         </NavGroup>
 
         <div className="mt-4">
-          <NavItem to="/map" icon={Map} label="Map" disabled />
+          <NavItem to="/map" icon={Map} label="Map" />
         </div>
 
         <NavGroup label="Knowledge">

@@ -8,6 +8,7 @@ import { getWell, wells } from "../../data/mockData.js";
 const PAGE_TITLES = {
   "/dashboard": "Dashboard",
   "/wells/intelligence": "Well Intelligence",
+  "/map": "Map",
 };
 
 export default function Topbar({ title }) {
