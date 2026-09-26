@@ -2,26 +2,33 @@
 @import "leaflet/dist/leaflet.css";
 
 @theme {
-  --color-wl-bg: #0b0d0e;
-  --color-wl-surface: #111416;
-  --color-wl-surface-2: #171b1d;
-  --color-wl-surface-3: #1d2225;
-  --color-wl-border: #282d30;
-  --color-wl-border-strong: #3a4145;
-  --color-wl-text-primary: #e7e9ea;
-  --color-wl-text-secondary: #8d969b;
-  --color-wl-text-muted: #687177;
-  --color-wl-accent: #c2453c;
-  --color-wl-accent-bright: #e06a5f;
-  --color-wl-warn: #d99a2b;
-  --color-wl-danger: #cf5f52;
-  --color-wl-normal: #6fa07a;
-  --color-wl-info: #6d94b0;
+  /* Wellora light industrial theme */
+  --color-wl-bg: #f6f7f5;
+  --color-wl-surface: #ffffff;
+  --color-wl-surface-2: #f1f3f1;
+  --color-wl-surface-3: #e9ecea;
+  --color-wl-border: #d9ddda;
+  --color-wl-border-strong: #c8ceca;
+  --color-wl-text-primary: #17201d;
+  --color-wl-text-secondary: #59635f;
+  --color-wl-text-muted: #7b8581;
+
+  /* Brand accent: orange, used intentionally */
+  --color-wl-accent: #e8751a;
+  --color-wl-accent-dark: #c95d0b;
+  --color-wl-accent-light: #fff1e6;
+  --color-wl-accent-faint: #fff8f2;
+
+  /* Semantic status colors */
+  --color-wl-warn: #b97800;
+  --color-wl-danger: #c84435;
+  --color-wl-normal: #3f7d55;
+  --color-wl-info: #5b7687;
 
   --font-sans: "IBM Plex Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
-  --radius-wl: 6px;
+  --radius-wl: 8px;
 }
 
 html,
@@ -39,7 +46,7 @@ body {
 }
 
 ::selection {
-  background: rgba(194, 69, 60, 0.35);
+  background: rgba(232, 117, 26, 0.25);
 }
 
 ::-webkit-scrollbar {
@@ -52,18 +59,23 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2b3134;
+  background: #c8ceca;
   border-radius: 5px;
   border: 2px solid var(--color-wl-bg);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a4145;
+  background: #b3bab6;
 }
 
 input:focus,
 button:focus {
   outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(232, 117, 26, 0.6);
+  outline-offset: 1px;
 }
 
 .tabular {
@@ -74,7 +86,8 @@ button:focus {
   .wl-card {
     background-color: var(--color-wl-surface);
     border: 1px solid var(--color-wl-border);
-    border-radius: 6px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(23, 32, 29, 0.04);
   }
 
   .wl-panel-head {
@@ -82,8 +95,8 @@ button:focus {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    min-height: 44px;
-    padding: 0 14px;
+    min-height: 46px;
+    padding: 0 16px;
     border-bottom: 1px solid var(--color-wl-border);
   }
 
@@ -103,9 +116,9 @@ button:focus {
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: 5px;
     border: 1px solid var(--color-wl-border-strong);
-    background-color: var(--color-wl-surface-2);
+    background-color: var(--color-wl-surface);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -116,19 +129,19 @@ button:focus {
   }
 
   .wl-btn:hover {
-    background-color: var(--color-wl-surface-3);
-    border-color: #4a5257;
+    background-color: var(--color-wl-surface-2);
+    border-color: #b3bab6;
   }
 
   .wl-btn-primary {
-    background-color: rgba(194, 69, 60, 0.14);
-    border-color: rgba(194, 69, 60, 0.45);
-    color: #e8a49c;
+    background-color: var(--color-wl-accent);
+    border-color: var(--color-wl-accent-dark);
+    color: #ffffff;
   }
 
   .wl-btn-primary:hover {
-    background-color: rgba(194, 69, 60, 0.24);
-    border-color: rgba(224, 106, 95, 0.6);
+    background-color: var(--color-wl-accent-dark);
+    border-color: var(--color-wl-accent-dark);
   }
 
   .wl-chip {
@@ -154,44 +167,39 @@ button:focus {
   }
 }
 
-/* Leaflet dark theme overrides */
+/* Leaflet light theme */
 .leaflet-container {
-  background: #0d1011;
+  background: #edefea;
   font-family: var(--font-sans);
 }
 
-/* Dark-theme treatment for keyless raster tiles (OpenStreetMap). */
-.leaflet-tile-pane {
-  filter: invert(1) hue-rotate(185deg) saturate(0.7) brightness(0.85) contrast(0.95);
-}
-
 .leaflet-control-attribution {
-  background: rgba(13, 16, 17, 0.8) !important;
-  color: #687177 !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #7b8581 !important;
   font-size: 9px !important;
 }
 
 .leaflet-control-attribution a {
-  color: #8d969b !important;
+  color: #59635f !important;
 }
 
 .leaflet-bar,
 .leaflet-bar a {
-  background: #171b1d !important;
-  color: #e7e9ea !important;
-  border-color: #282d30 !important;
+  background: #ffffff !important;
+  color: #17201d !important;
+  border-color: #d9ddda !important;
 }
 
 .leaflet-bar a:hover {
-  background: #1d2225 !important;
+  background: #f1f3f1 !important;
 }
 
 .wl-well-popup .leaflet-popup-content-wrapper {
-  background: #171b1d;
-  color: #e7e9ea;
-  border: 1px solid #3a4145;
-  border-radius: 4px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  background: #ffffff;
+  color: #17201d;
+  border: 1px solid #d9ddda;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(23, 32, 29, 0.12);
 }
 
 .wl-well-popup .leaflet-popup-content {
@@ -200,17 +208,17 @@ button:focus {
 }
 
 .wl-well-popup .leaflet-popup-tip {
-  background: #171b1d;
-  border: 1px solid #3a4145;
+  background: #ffffff;
+  border: 1px solid #d9ddda;
 }
 
 .wl-well-popup a.leaflet-popup-close-button {
-  color: #8d969b;
+  color: #7b8581;
   padding: 6px 8px 0 0;
 }
 
 .wl-well-popup a.leaflet-popup-close-button:hover {
-  color: #e7e9ea;
+  color: #17201d;
 }
 
 @keyframes wl-blink {

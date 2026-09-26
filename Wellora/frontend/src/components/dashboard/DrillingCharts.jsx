@@ -16,13 +16,13 @@ import {
   getWell,
 } from "../../data/mockData.js";
 
-const AXIS_STYLE = { fill: "#687177", fontSize: 10 };
-const GRID_COLOR = "#22272a";
+const AXIS_STYLE = { fill: "#69736F", fontSize: 10 };
+const GRID_COLOR = "#E5E8E6";
 
 function ChartTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-[4px] border border-wl-border-strong bg-wl-surface-2 px-2.5 py-2 text-[11px] shadow-[0_8px_20px_rgba(0,0,0,0.45)]">
+    <div className="rounded-[4px] border border-wl-border bg-wl-surface px-2.5 py-2 text-[11px] shadow-[0_8px_20px_rgba(23,32,29,0.14)]">
       <div className="tabular font-mono text-wl-text-muted">Depth {label} m</div>
       {payload.map((p) => (
         <div key={p.dataKey} className="tabular mt-0.5 flex items-center gap-2 font-mono">
@@ -59,11 +59,11 @@ export default function DrillingCharts() {
           dataKey="torque"
           label="Torque"
           unit="kNm"
-          color="#c2453c"
+          color="#E8751A"
           yLabel="kNm"
         />
-        <MiniLineChart data={data} dataKey="rop" label="ROP" unit="m/hr" color="#6d94b0" yLabel="m/hr" />
-        <MiniLineChart data={data} dataKey="pressure" label="Pressure" unit="psi" color="#6fa07a" yLabel="psi" />
+        <MiniLineChart data={data} dataKey="rop" label="ROP" unit="m/hr" color="#5B7687" yLabel="m/hr" />
+        <MiniLineChart data={data} dataKey="pressure" label="Pressure" unit="psi" color="#3F7D55" yLabel="psi" />
       </div>
     </section>
   );
@@ -86,7 +86,7 @@ function MiniLineChart({ data, dataKey, label, unit, color }) {
               dataKey="depth"
               tick={AXIS_STYLE}
               tickLine={false}
-              axisLine={{ stroke: "#2b3134" }}
+              axisLine={{ stroke: "#C8CECA" }}
               minTickGap={24}
             />
             <YAxis
@@ -96,7 +96,7 @@ function MiniLineChart({ data, dataKey, label, unit, color }) {
               width={42}
               domain={["auto", "auto"]}
             />
-            <Tooltip content={<ChartTooltip />} cursor={{ stroke: "#3a4145", strokeDasharray: "3 3" }} />
+            <Tooltip content={<ChartTooltip />} cursor={{ stroke: "#B3BAB6", strokeDasharray: "3 3" }} />
             <Line
               type="monotone"
               dataKey={dataKey}

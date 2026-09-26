@@ -13,7 +13,7 @@ export default function DashboardLayout() {
           <Topbar />
           <main className="relative flex-1 overflow-y-auto">
             <Watermark />
-            <div className="relative z-10 px-5 py-5">
+            <div className="relative z-10 px-6 py-5">
               <Outlet />
             </div>
           </main>

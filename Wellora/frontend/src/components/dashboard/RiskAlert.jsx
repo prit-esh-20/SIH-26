@@ -6,9 +6,15 @@ import { useWellContext } from "../../context/WellContext.jsx";
 import { getRiskAlerts, getAlertEvidence } from "../../data/mockData.js";
 
 const SEVERITY_COLOR = {
-  High: "#cf5f52",
-  Medium: "#d99a2b",
-  Low: "#6fa07a",
+  High: "#c84435",
+  Medium: "#b97800",
+  Low: "#3f7d55",
+};
+
+const SEVERITY_SOFT_BG = {
+  High: "#FBEAE8",
+  Medium: "#FBF2E0",
+  Low: "#EAF2EC",
 };
 
 export default function RiskAlert({ onOpenEvidence }) {
@@ -47,8 +53,8 @@ export default function RiskAlert({ onOpenEvidence }) {
               className="wl-chip"
               style={{
                 color,
-                backgroundColor: `${color}1F`,
-                borderColor: `${color}73`,
+                backgroundColor: SEVERITY_SOFT_BG[alert.severity] ?? "#F1F3F1",
+                borderColor: `${color}59`,
               }}
             >
               {alert.severity}
@@ -68,7 +74,7 @@ export default function RiskAlert({ onOpenEvidence }) {
         }
       />
 
-      <div className="px-5 pb-5 pt-4">
+      <div className="px-6 pb-6 pt-4">
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-wl-text-muted">
@@ -82,7 +88,7 @@ export default function RiskAlert({ onOpenEvidence }) {
             <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-wl-text-muted">
               Risk Estimate
             </div>
-            <div className="tabular mt-0.5 text-[26px] font-semibold leading-none" style={{ color }}>
+            <div className="tabular mt-0.5 text-[20px] font-semibold leading-none text-wl-text-primary">
               {Math.round(alert.riskScore * 100)}
               <span className="text-sm font-normal text-wl-text-muted">%</span>
             </div>
@@ -100,7 +106,7 @@ export default function RiskAlert({ onOpenEvidence }) {
           <MetricDisplay label="Comparable Wells" value={alert.comparableWells.length} />
         </div>
 
-        <div className="mt-4 rounded-[4px] border border-wl-border bg-wl-surface-2 px-3.5 py-3">
+        <div className="mt-4 rounded-[5px] border border-wl-border bg-wl-surface-2 px-3.5 py-3">
           <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-wl-text-muted">
             Why this alert
           </div>
@@ -108,8 +114,8 @@ export default function RiskAlert({ onOpenEvidence }) {
             {alert.basis.map((b) => (
               <li key={b.label} className="flex items-start gap-2 text-[12px]">
                 <span
-                  className="mt-[5px] inline-block h-1.5 w-1.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: b.present ? color : "#687177" }}
+                  className="mt-[4px] inline-block h-1.5 w-1.5 shrink-0 rounded-full"
+                  style={{ backgroundColor: b.present ? color : "#b3bab6" }}
                 />
                 <span className="text-wl-text-primary">
                   {b.label}

@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, FileText, X } from "lucide-react";
 import { getAlertEvidence } from "../../data/mockData.js";
-import { getWell } from "../../data/mockData.js";
 
 export default function EvidencePanel({ alert, open, onClose, focus }) {
   const evidence = alert ? getAlertEvidence(alert) : [];
@@ -14,7 +13,7 @@ export default function EvidencePanel({ alert, open, onClose, focus }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[1400] bg-black/55"
+          className="fixed inset-0 z-[1400] bg-[#17201D]/35"
           onClick={onClose}
         >
           <motion.aside
@@ -41,7 +40,7 @@ export default function EvidencePanel({ alert, open, onClose, focus }) {
             </div>
 
             <div className="flex-1 overflow-y-auto px-5 py-5">
-              <div className="text-[17px] font-semibold tracking-wide" style={{ color: "#cf5f52" }}>
+              <div className="text-[17px] font-semibold tracking-wide" style={{ color: "#c84435" }}>
                 {alert.severity} {alert.riskType} Risk
               </div>
               <div className="tabular mt-0.5 text-[12px] text-wl-text-secondary">
@@ -58,7 +57,7 @@ export default function EvidencePanel({ alert, open, onClose, focus }) {
                     <li key={b.label} className="flex items-start gap-2 text-[12px]">
                       <span
                         className="mt-[5px] inline-block h-1.5 w-1.5 shrink-0 rounded-full"
-                        style={{ backgroundColor: b.present ? "#cf5f52" : "#687177" }}
+                        style={{ backgroundColor: b.present ? "#c84435" : "#b3bab6" }}
                       />
                       <span className="text-wl-text-primary">
                         {b.label}

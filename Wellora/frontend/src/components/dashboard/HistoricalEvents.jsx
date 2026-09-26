@@ -47,7 +47,7 @@ export default function HistoricalEvents() {
               <tr
                 key={e.id}
                 onClick={() => setSelectedEvent(e)}
-                className="cursor-pointer border-b border-wl-border/50 transition-colors duration-100 last:border-0 hover:bg-wl-surface-2"
+                className="cursor-pointer border-b border-wl-border/70 transition-colors duration-100 last:border-0 hover:bg-wl-accent-faint"
               >
                 <td className="tabular px-4 py-[7px] font-mono text-[12px]">
                   {e.depth.toLocaleString("en-IN")} m

@@ -1,14 +1,14 @@
 const SEVERITY_STYLES = {
-  High: { color: "#cf5f52", bg: "rgba(207,95,82,0.12)", border: "rgba(207,95,82,0.45)" },
-  Medium: { color: "#d99a2b", bg: "rgba(217,154,43,0.12)", border: "rgba(217,154,43,0.45)" },
-  Low: { color: "#6fa07a", bg: "rgba(111,160,122,0.12)", border: "rgba(111,160,122,0.45)" },
+  High: { color: "#c84435", bg: "#FBEAE8", border: "rgba(200,68,53,0.35)" },
+  Medium: { color: "#b97800", bg: "#FBF2E0", border: "rgba(185,120,0,0.35)" },
+  Low: { color: "#3f7d55", bg: "#EAF2EC", border: "rgba(63,125,85,0.35)" },
 };
 
 export default function SeverityChip({ severity }) {
   const s = SEVERITY_STYLES[severity] ?? {
-    color: "#8d969b",
-    bg: "rgba(141,150,155,0.1)",
-    border: "rgba(141,150,155,0.4)",
+    color: "#59635f",
+    bg: "#F1F3F1",
+    border: "rgba(89,99,95,0.35)",
   };
   return (
     <span

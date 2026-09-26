@@ -11,7 +11,7 @@ export default function EventDetailDrawer({ event, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[1400] bg-black/55"
+          className="fixed inset-0 z-[1400] bg-[#17201D]/35"
           onClick={onClose}
         >
           <motion.aside

@@ -3,8 +3,7 @@ import SectionHeader from "../common/SectionHeader.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
 import { getComparableWells, getWell } from "../../data/mockData.js";
 
-const SIMILARITY_COLOR = (s) =>
-  s >= 80 ? "#6fa07a" : s >= 60 ? "#d99a2b" : "#8d969b";
+const SIMILARITY_FILL = "#E8751A";
 
 export default function ComparableWells() {
   const { activeWellId } = useWellContext();
@@ -37,7 +36,7 @@ export default function ComparableWells() {
             return (
               <tr
                 key={c.wellId}
-                className="border-b border-wl-border/50 transition-colors duration-100 last:border-0 hover:bg-wl-surface-2"
+                className="border-b border-wl-border/70 transition-colors duration-100 last:border-0 hover:bg-wl-accent-faint"
                 title={w ? `${w.status} at ${w.depth.toLocaleString("en-IN")} m` : undefined}
               >
                 <td className="px-4 py-[7px] font-medium text-wl-text-primary">{c.wellId}</td>
@@ -52,7 +51,7 @@ export default function ComparableWells() {
                         className="h-full rounded-[2px]"
                         style={{
                           width: `${c.similarity}%`,
-                          backgroundColor: SIMILARITY_COLOR(c.similarity),
+                          backgroundColor: SIMILARITY_FILL,
                         }}
                       />
                     </div>

@@ -7,9 +7,9 @@ export default function WellPopup({ marker }) {
           <span
             className="wl-chip"
             style={{
-              color: "#e8a49c",
-              borderColor: "rgba(224,106,95,0.5)",
-              backgroundColor: "rgba(194,69,60,0.12)",
+              color: "#C95D0B",
+              borderColor: "rgba(201,93,11,0.4)",
+              backgroundColor: "#FFF1E6",
             }}
           >
             Current

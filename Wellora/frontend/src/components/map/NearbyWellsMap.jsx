@@ -10,7 +10,7 @@ import { getComparableWells, getWell } from "../../data/mockData.js";
 function dotIcon(color) {
   return L.divIcon({
     className: "",
-    html: `<div style="width:13px;height:13px;border-radius:50%;background:${color};border:2px solid #0b0d0e;box-shadow:0 1px 6px rgba(0,0,0,0.6);"></div>`,
+    html: `<div style="width:13px;height:13px;border-radius:50%;background:${color};border:2px solid #ffffff;box-shadow:0 1px 4px rgba(23,32,29,0.35);"></div>`,
     iconSize: [13, 13],
     iconAnchor: [6.5, 6.5],
     popupAnchor: [0, -8],
@@ -20,9 +20,9 @@ function dotIcon(color) {
 function currentWellIcon(id) {
   return L.divIcon({
     className: "",
-    html: `<div style="width:36px;height:24px;border-radius:4px;border:1.5px solid #e06a5f;background:rgba(194,69,60,0.18);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.55);"><span style="font:600 10px 'IBM Plex Sans',sans-serif;color:#e8a49c;letter-spacing:0.04em;">${id}</span></div>`,
-    iconSize: [36, 24],
-    iconAnchor: [18, 12],
+    html: `<div style="width:38px;height:24px;border-radius:4px;border:1.5px solid #C95D0B;background:#E8751A;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(232,117,26,0.4);"><span style="font:600 10px 'IBM Plex Sans',sans-serif;color:#ffffff;letter-spacing:0.04em;">${id}</span></div>`,
+    iconSize: [38, 24],
+    iconAnchor: [19, 12],
     popupAnchor: [0, -10],
   });
 }
@@ -103,7 +103,7 @@ export default function NearbyWellsMap() {
             <Marker
               key={m.id}
               position={m.coords}
-              icon={m.isCurrent ? currentWellIcon(m.id) : dotIcon("#6d94b0")}
+              icon={m.isCurrent ? currentWellIcon(m.id) : dotIcon("#56615D")}
             >
               <Popup className="wl-well-popup">
                 <WellPopup marker={m} />

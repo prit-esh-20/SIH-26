@@ -9,9 +9,9 @@ import {
 } from "../../data/mockData.js";
 
 const SEVERITY_COLOR = {
-  High: "#cf5f52",
-  Medium: "#d99a2b",
-  Low: "#6fa07a",
+  High: "#c84435",
+  Medium: "#b97800",
+  Low: "#3f7d55",
 };
 
 export default function DepthTimeline() {
@@ -58,21 +58,21 @@ export default function DepthTimeline() {
               style={{
                 top: `${depthToPct(zone[0])}%`,
                 height: `${Math.max(depthToPct(zone[1]) - depthToPct(zone[0]), 2)}%`,
-                borderColor: "rgba(207,95,82,0.55)",
-                backgroundColor: "rgba(207,95,82,0.10)",
+                borderColor: "rgba(200,68,53,0.5)",
+                backgroundColor: "rgba(200,68,53,0.07)",
               }}
               title={`Historical risk zone ${zone[0].toLocaleString("en-IN")} - ${zone[1].toLocaleString("en-IN")} m`}
             />
           )}
 
           <div
-            className="absolute -left-[86px] z-10 whitespace-nowrap rounded-[3px] border border-wl-border-strong bg-wl-surface-3 px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
+            className="absolute -left-[86px] z-10 whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
             style={{ top: `${depthToPct(currentDepth)}%`, transform: "translateY(-50%)" }}
           >
             {activeWellId} · {currentDepth.toLocaleString("en-IN")} m
           </div>
           <div
-            className="absolute -left-[4px] z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-bg bg-wl-accent-bright"
+            className="absolute -left-[4px] z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"
             style={{ top: `${depthToPct(currentDepth)}%` }}
           />
 

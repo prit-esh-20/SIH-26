@@ -22,7 +22,7 @@ export default function FormationContext() {
   return (
     <section className="wl-card flex flex-col">
       <SectionHeader icon={Layers} title="Formation Context" />
-      <div className="flex-1 px-4 py-4">
+      <div className="flex-1 px-5 py-5">
         <div className="flex items-center justify-between">
           <div>
             <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-wl-text-muted">

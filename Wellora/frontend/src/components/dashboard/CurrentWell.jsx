@@ -20,7 +20,7 @@ export default function CurrentWell() {
           </span>
         }
       />
-      <div className="flex flex-wrap items-end gap-x-10 gap-y-5 px-5 pb-5 pt-4">
+      <div className="flex flex-wrap items-end gap-x-10 gap-y-5 px-6 pb-6 pt-4">
         <div>
           <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-wl-text-muted">
             Well

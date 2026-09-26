@@ -14,7 +14,7 @@ export default function DrillingParameters() {
         title="Drilling Parameters"
         actions={<span className="text-[10.5px] text-wl-text-muted">Snapshot</span>}
       />
-      <div className="grid grid-cols-3 gap-x-4 gap-y-3.5 px-4 py-4">
+      <div className="grid grid-cols-3 gap-x-4 gap-y-4 px-5 py-5">
         {params.map((p) => (
           <div key={p.key} className="min-w-0">
             <div className="truncate text-[10px] font-medium uppercase tracking-[0.1em] text-wl-text-muted">
