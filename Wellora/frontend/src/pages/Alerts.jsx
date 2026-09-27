@@ -91,7 +91,7 @@ export default function Alerts() {
           selectedId={effectiveSelectedId}
           onSelect={setSelectedId}
         />
-        <div className="xl:sticky xl:top-20 xl:max-h-[calc(100vh-140px)] xl:overflow-y-auto">
+        <div className="xl:sticky xl:top-0 xl:self-start">
           <AlertDetails alert={selected} />
         </div>
       </div>
