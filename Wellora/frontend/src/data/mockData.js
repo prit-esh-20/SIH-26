@@ -575,7 +575,118 @@ export const documents = [
   { id: "DDR-W198", type: "Daily Drilling Report", well: "W-198" },
   { id: "DDR-W176", type: "Daily Drilling Report", well: "W-176" },
   { id: "DDR-W163", type: "Daily Drilling Report", well: "W-163" },
+  { id: "WCR-W176", type: "Well Completion Report", well: "W-176" },
+  { id: "WCR-W163", type: "Well Completion Report", well: "W-163" },
+  { id: "EVR-W201", type: "Event Report", well: "W-201" },
+  { id: "OPSR-W201", type: "Operations Report", well: "W-201" },
 ];
+
+// ---------------------------------------------------------------------------
+// Document library: the archive behind the Documents page. Event-linked
+// records are derived from historicalEvents so document id, page, date, well,
+// depth and formation always agree with the events table and evidence
+// panels. Well-level records (completion / operations / event reports) are
+// representative archive entries for the same prototype wells.
+// ---------------------------------------------------------------------------
+
+const documentTypeById = Object.fromEntries(documents.map((d) => [d.id, d.type]));
+
+const eventLinkedDocuments = historicalEvents.map((e) => ({
+  id: `${e.document}-P${String(e.page).padStart(2, "0")}`,
+  documentId: e.document,
+  type: documentTypeById[e.document] ?? "Document",
+  wellId: e.wellId,
+  date: e.date,
+  formation: e.formation,
+  eventId: e.id,
+  eventType: e.eventType,
+  depth: e.depth,
+  page: e.page,
+  status: "Available",
+}));
+
+const wellLevelDocuments = [
+  {
+    id: "WCR-W198-MAIN",
+    documentId: "WCR-W198",
+    type: "Well Completion Report",
+    wellId: "W-198",
+    date: "2026-04-30",
+    formation: "F3",
+    eventId: null,
+    eventType: null,
+    depth: 3040,
+    page: 1,
+    status: "Available",
+  },
+  {
+    id: "WCR-W187-MAIN",
+    documentId: "WCR-W187",
+    type: "Well Completion Report",
+    wellId: "W-187",
+    date: "2026-01-28",
+    formation: "F4",
+    eventId: null,
+    eventType: null,
+    depth: 3120,
+    page: 1,
+    status: "Available",
+  },
+  {
+    id: "WCR-W176-MAIN",
+    documentId: "WCR-W176",
+    type: "Well Completion Report",
+    wellId: "W-176",
+    date: "2025-11-25",
+    formation: "F3",
+    eventId: null,
+    eventType: null,
+    depth: 2905,
+    page: 1,
+    status: "Available",
+  },
+  {
+    id: "WCR-W163-MAIN",
+    documentId: "WCR-W163",
+    type: "Well Completion Report",
+    wellId: "W-163",
+    date: "2025-09-18",
+    formation: "F4",
+    eventId: null,
+    eventType: null,
+    depth: 3185,
+    page: 1,
+    status: "Available",
+  },
+  {
+    id: "EVR-W201-37",
+    documentId: "EVR-W201",
+    type: "Event Report",
+    wellId: "W-201",
+    date: "2026-06-15",
+    formation: "F3",
+    eventId: "EV-001",
+    eventType: "Mud Loss",
+    depth: 2875,
+    page: 1,
+    status: "Available",
+  },
+  {
+    id: "OPSR-W201-SUM",
+    documentId: "OPSR-W201",
+    type: "Operations Report",
+    wellId: "W-201",
+    date: "2026-06-20",
+    formation: "F3",
+    eventId: null,
+    eventType: null,
+    depth: 2980,
+    page: 1,
+    status: "Available",
+  },
+];
+
+export const documentLibrary = [...eventLinkedDocuments, ...wellLevelDocuments];
 
 // ---------------------------------------------------------------------------
 // Derived collections (kept in sync with the records above automatically)
@@ -664,4 +775,8 @@ export function getTotalNptForWell(wellId) {
 
 export function getDocumentType(documentId) {
   return documents.find((d) => d.id === documentId)?.type ?? "Document";
+}
+
+export function getDocumentById(rowId) {
+  return documentLibrary.find((d) => d.id === rowId) ?? null;
 }

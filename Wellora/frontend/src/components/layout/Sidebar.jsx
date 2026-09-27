@@ -86,7 +86,7 @@ export default function Sidebar() {
         </div>
 
         <NavGroup label="Knowledge">
-          <NavItem to="/knowledge/documents" icon={FileText} label="Documents" disabled />
+          <NavItem to="/documents" icon={FileText} label="Documents" />
           <NavItem to="/events" icon={Database} label="Historical Events" />
         </NavGroup>
 

@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import WellIntelligence from "./pages/WellIntelligence.jsx";
 import Map from "./pages/Map.jsx";
 import HistoricalEvents from "./pages/HistoricalEvents.jsx";
+import Documents from "./pages/Documents.jsx";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/wells/intelligence" element={<WellIntelligence />} />
         <Route path="/map" element={<Map />} />
         <Route path="/events" element={<HistoricalEvents />} />
+        <Route path="/documents" element={<Documents />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>
     </Routes>
