@@ -19,7 +19,7 @@ const DEPTH_WINDOW_PADDING = 110;
 
 // Target compact height range for the visualization
 const MIN_VIZ_HEIGHT = 240;
-const MAX_VIZ_HEIGHT = 360;
+const MAX_VIZ_HEIGHT = 340;
 const EVENT_HEIGHT_INCREMENT = 18;
 
 export default function DepthTimeline() {
@@ -58,6 +58,12 @@ export default function DepthTimeline() {
 
   const hasRelevantEvents = eventCount > 0;
 
+  // Assign alternating sides for event labels (left/right of center axis)
+  const eventsWithSide = events.map((e, idx) => ({
+    ...e,
+    side: idx % 2 === 0 ? "left" : "right",
+  }));
+
   return (
     <section className="wl-card flex flex-col">
       <SectionHeader
@@ -73,9 +79,11 @@ export default function DepthTimeline() {
       <div className="px-5 py-4">
         {!hasRelevantEvents ? (
           <div
-            className="relative ml-[92px] w-[3px] rounded-full bg-wl-border"
+            className="relative w-full"
             style={{ minHeight: `${MIN_VIZ_HEIGHT}px`, maxHeight: `${MAX_VIZ_HEIGHT}px` }}
           >
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[3px] rounded-full bg-wl-border" />
+
             <div
               className="absolute left-1/2 w-[46px] -translate-x-1/2 rounded-[2px] border border-dashed"
               style={{
@@ -87,25 +95,29 @@ export default function DepthTimeline() {
             />
 
             <div
-              className="absolute -left-[86px] z-10 whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
-              style={{ top: `${depthToPct(currentDepth)}%`, transform: "translateY(-50%)" }}
+              className="absolute left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
+              style={{ top: `${depthToPct(currentDepth)}%`, transform: "translate(-50%, -50%)" }}
             >
               {activeWellId} · {currentDepth.toLocaleString("en-IN")} m
             </div>
             <div
-              className="absolute -left-[4px] z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"
+              className="absolute left-1/2 -translate-x-1/2 z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"
               style={{ top: `${depthToPct(currentDepth)}%` }}
             />
 
-            <div className="absolute left-2 top-1/2 -translate-y-1/2 text-[10.5px] text-wl-text-muted whitespace-nowrap">
+            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-[10.5px] text-wl-text-muted text-center">
               No historical events in the current depth window
             </div>
           </div>
         ) : (
           <div
-            className="relative ml-[92px] w-[3px] rounded-full bg-wl-border"
+            className="relative w-full"
             style={{ height: `${calculatedHeight}px` }}
           >
+            {/* Central depth axis */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[3px] rounded-full bg-wl-border" />
+
+            {/* Risk zone band on central axis */}
             {zone && (
               <div
                 className="absolute left-1/2 w-[46px] -translate-x-1/2 rounded-[2px] border border-dashed"
@@ -119,25 +131,31 @@ export default function DepthTimeline() {
               />
             )}
 
+            {/* Current well marker on central axis */}
             <div
-              className="absolute -left-[86px] z-10 whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
-              style={{ top: `${depthToPct(currentDepth)}%`, transform: "translateY(-50%)" }}
+              className="absolute left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
+              style={{ top: `${depthToPct(currentDepth)}%`, transform: "translate(-50%, -50%)" }}
             >
               {activeWellId} · {currentDepth.toLocaleString("en-IN")} m
             </div>
             <div
-              className="absolute -left-[4px] z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"
+              className="absolute left-1/2 -translate-x-1/2 z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"
               style={{ top: `${depthToPct(currentDepth)}%` }}
             />
 
-            {events.map((e) => (
+            {/* Historical events alternating left/right */}
+            {eventsWithSide.map((e) => (
               <div
                 key={e.id}
-                className="absolute left-2 flex items-center gap-1.5 whitespace-nowrap"
+                className={`absolute flex items-center gap-1.5 whitespace-nowrap ${
+                  e.side === "left"
+                    ? "right-1/2 justify-end mr-6"
+                    : "left-1/2 ml-6"
+                }`}
                 style={{ top: `${depthToPct(e.depth)}%`, transform: "translateY(-50%)" }}
               >
                 <span
-                  className="inline-block h-[7px] w-[7px] rounded-full"
+                  className="inline-block h-[7px] w-[7px] rounded-full flex-shrink-0"
                   style={{ backgroundColor: SEVERITY_COLOR[e.severity] }}
                 />
                 <span className="tabular font-mono text-[10.5px] text-wl-text-secondary">

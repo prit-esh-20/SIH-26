@@ -40,6 +40,11 @@ export const wells = [
     lastUpdate: "11:05:40",
     rig: "Rig 4",
     spudDate: "2026-05-19",
+    suspensionDate: "2026-06-15",
+    suspensionCategory: "Geological / Drilling Condition",
+    suspensionReason: "Recurring mud losses and stuck-pipe risk in friable F3 sand. Well suspended pending rig upgrade and revised mud program.",
+    suspensionSummary: "Well suspended at 2,980 m in F3 formation after multiple mud-loss events and a stuck-pipe incident in offset wells. Operations paused for rig capability upgrade and optimized fluid design.",
+    suspensionEvidence: "DDR-W201 p.66, WCR-W198 p.112",
   },
   {
     id: "W-198",
@@ -53,6 +58,15 @@ export const wells = [
     lastUpdate: "09:47:03",
     rig: "Rig 2",
     spudDate: "2026-03-08",
+    completionDate: "2026-04-30",
+    completionType: "Production",
+    completionSummary: "Well completed at 3,040 m in F3 formation. Five historical events recorded including mud loss, kick, and tight hole. Completed with 7\" liner and intelligent completion.",
+    totalNpt: 24.3,
+    significantEvents: [
+      { depth: 2810, eventType: "Tight Hole", severity: "Low" },
+      { depth: 2892, eventType: "Mud Loss", severity: "Medium" },
+      { depth: 2955, eventType: "Kick", severity: "High" },
+    ],
   },
   {
     id: "W-187",
@@ -66,6 +80,16 @@ export const wells = [
     lastUpdate: "17:22:55",
     rig: "Rig 5",
     spudDate: "2025-11-14",
+    paDate: "2026-01-28",
+    paReason: "Reservoir depletion and uneconomic water cut. No further zone of interest identified.",
+    paSummary: "Well plugged and abandoned at 3,120 m in F4 formation after reaching planned TD. Multiple stuck-pipe and mud-loss events during drilling. Standard P&A procedure executed with cement plugs across F3/F4.",
+    paEvidence: "WCR-W187 p.1, DDR-W187 p.58",
+    majorEvents: [
+      { depth: 2884, eventType: "Tight Hole", severity: "Low" },
+      { depth: 2910, eventType: "Stuck Pipe", severity: "High" },
+      { depth: 2868, eventType: "Mud Loss", severity: "Medium" },
+      { depth: 3020, eventType: "Stuck Pipe", severity: "Medium" },
+    ],
   },
   {
     id: "W-176",
@@ -79,6 +103,13 @@ export const wells = [
     lastUpdate: "16:12:09",
     rig: "Rig 3",
     spudDate: "2025-09-30",
+    completionDate: "2025-11-25",
+    completionType: "Production",
+    completionSummary: "Well completed at 2,905 m in F3 formation. One minor mud-loss event recorded. Completed with standard 8-1/2\" hole section.",
+    totalNpt: 2.1,
+    significantEvents: [
+      { depth: 2836, eventType: "Mud Loss", severity: "Low" },
+    ],
   },
   {
     id: "W-163",
@@ -92,6 +123,14 @@ export const wells = [
     lastUpdate: "13:58:31",
     rig: "Rig 1",
     spudDate: "2025-07-22",
+    completionDate: "2025-09-18",
+    completionType: "Production",
+    completionSummary: "Well completed at 3,185 m in F4 formation. Two events recorded in F5 compact sand: bit balling and mud loss. Completed with 7\" liner.",
+    totalNpt: 6.7,
+    significantEvents: [
+      { depth: 3495, eventType: "Bit Balling", severity: "Low" },
+      { depth: 3560, eventType: "Mud Loss", severity: "Medium" },
+    ],
   },
 ];
 
