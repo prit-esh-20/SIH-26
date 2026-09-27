@@ -13,12 +13,12 @@ import EventTypeSummary from "../components/events/EventTypeSummary.jsx";
 import RelatedWellsCard from "../components/events/RelatedWellsCard.jsx";
 import SourceEvidenceDrawer from "../components/intelligence/SourceEvidenceDrawer.jsx";
 import { useWellContext } from "../context/WellContext.jsx";
-import { getWell, historicalEvents, wells } from "../data/mockData.js";
+import { getWell, historicalEvents } from "../data/mockData.js";
 // Map page: navigate("/map") reuses the existing Operational Map view.
 // Well Intelligence deep-links reuse the shared WellContext active well.
 
 export default function HistoricalEvents() {
-  const { activeWellId, setActiveWellId } = useWellContext();
+  const { activeWellId } = useWellContext();
   const navigate = useNavigate();
 
   const [filters, setFilters] = useState(EMPTY_EVENT_FILTERS);
@@ -57,7 +57,7 @@ export default function HistoricalEvents() {
     const forms = [...new Set(historicalEvents.map((e) => e.formation))];
     return {
       events: historicalEvents.length,
-      wells: wells.length,
+      wells: new Set(historicalEvents.map((e) => e.wellId)).size,
       min: Math.min(...depths),
       max: Math.max(...depths),
       formations: forms.join(" / "),
@@ -101,11 +101,7 @@ export default function HistoricalEvents() {
             events={sorted}
             total={historicalEvents.length}
             selectedEventId={selectedEventId}
-            onSelect={(id) => {
-              const ev = historicalEvents.find((e) => e.id === id);
-              if (ev && ev.wellId !== activeWellId) setActiveWellId(ev.wellId);
-              setSelectedEventId(id);
-            }}
+            onSelect={setSelectedEventId}
             sort={sort}
             onSortChange={setSort}
           />
@@ -119,7 +115,7 @@ export default function HistoricalEvents() {
           />
           <EventContextPanel event={selectedEvent} />
           <SourceEvidenceMini event={selectedEvent} onView={() => setEvidenceOpen(true)} />
-          <RelatedWellsCard excludeWellId={selectedEvent?.wellId} />
+          <RelatedWellsCard wellId={selectedEvent?.wellId} />
           <button
             type="button"
             className="wl-btn w-full justify-center"
