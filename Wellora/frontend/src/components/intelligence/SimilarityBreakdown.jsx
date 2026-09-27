@@ -1,5 +1,6 @@
 import { GitCompare } from "lucide-react";
 import SectionHeader from "../common/SectionHeader.jsx";
+import { useWellContext } from "../../context/WellContext.jsx";
 import { getComparableEntry } from "../../data/mockData.js";
 
 const FACTORS = [
@@ -11,7 +12,8 @@ const FACTORS = [
 ];
 
 export default function SimilarityBreakdown({ selectedWellId }) {
-  const entry = getComparableEntry(selectedWellId);
+  const { activeWellId } = useWellContext();
+  const entry = getComparableEntry(activeWellId, selectedWellId);
   const breakdown = entry?.similarityBreakdown ?? {};
 
   return (
