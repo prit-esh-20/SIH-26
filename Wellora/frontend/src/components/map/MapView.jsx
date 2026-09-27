@@ -54,6 +54,23 @@ function InitialView() {
   return null;
 }
 
+// Wheel and pinch-zoom enablement is a static Leaflet config choice (it does
+// not change after mount), so it is applied imperatively once on the map
+// instance. No React state is involved, so zoom events cause no re-renders and
+// the user's manually chosen zoom level always persists while on the page.
+function WheelZoom() {
+  const map = useMap();
+  const done = useRef(false);
+  useEffect(() => {
+    if (!done.current) {
+      done.current = true;
+      map.scrollWheelZoom.enable();
+      map.touchZoom.enable();
+    }
+  }, [map]);
+  return null;
+}
+
 export default function MapView({ activeWellId, visibleWells, selectedWellId, onSelect, filters }) {
   const current = getWell(activeWellId);
 
@@ -205,6 +222,7 @@ export default function MapView({ activeWellId, visibleWells, selectedWellId, on
           ))}
 
           <InitialView />
+          <WheelZoom />
         </MapContainer>
       </div>
     </section>
