@@ -5,7 +5,6 @@ import { useWellContext } from "../../context/WellContext.jsx";
 import {
   getAlertEvidence,
   getComparableEntry,
-  getEventById,
   getEventsForWell,
 } from "../../data/mockData.js";
 
@@ -31,9 +30,7 @@ export default function AlertDetails({ alert }) {
   }
 
   const color = SEVERITY_COLOR[alert.severity] ?? "#7b8581";
-  const evidence = getAlertEvidence(alert);
-  const primary = evidence[0]?.event ?? null;
-  const response = primary;
+  const primaryEvent = getAlertEvidence(alert)[0]?.event ?? null;
 
   return (
     <section className="wl-card flex flex-col">
@@ -47,7 +44,7 @@ export default function AlertDetails({ alert }) {
         }
       />
 
-      <div className="px-5 py-4">
+      <div className="px-5 pb-5 pt-3">
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-wl-text-muted">
@@ -68,7 +65,7 @@ export default function AlertDetails({ alert }) {
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-wl-border pt-3.5 sm:grid-cols-3">
+        <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-wl-border pt-3 sm:grid-cols-3">
           <Kv label="Severity" value={alert.severity} />
           <Kv label="Well" value={alert.wellId} />
           <Kv label="Current Depth" value={`${alert.currentDepth.toLocaleString("en-IN")} m`} mono />
@@ -81,7 +78,7 @@ export default function AlertDetails({ alert }) {
           <Kv label="Distance to Zone" value={`${alert.distanceToRiskM} m`} mono />
         </div>
 
-        <div className="mt-4 rounded-[5px] border border-wl-border bg-wl-surface-2 px-3.5 py-3">
+        <div className="mt-3 rounded-[5px] border border-wl-border bg-wl-surface-2 px-3.5 py-3">
           <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-wl-text-muted">
             Why this alert
           </div>
@@ -105,11 +102,11 @@ export default function AlertDetails({ alert }) {
           </div>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-3.5">
           <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-wl-text-muted">
             Supporting Evidence
           </div>
-          <div className="mt-2 space-y-2">
+          <div className="mt-2 space-y-1.5">
             {alert.comparableWells.map((wellId) => {
               const entry = getComparableEntry(wellId);
               const wellEvents = entry ? entry.events : getEventsForWell(wellId).length;
@@ -144,11 +141,9 @@ export default function AlertDetails({ alert }) {
 
         <DepthContext alert={alert} />
 
-        {response && (
-          <HistoricalResponse event={response} severityColor={color} />
-        )}
+        {primaryEvent && <HistoricalResponse event={primaryEvent} />}
 
-        <div className="mt-5 flex items-center gap-2">
+        <div className="mt-4 flex flex-wrap items-center gap-2">
           <button
             type="button"
             className="wl-btn wl-btn-primary"
@@ -173,66 +168,75 @@ export default function AlertDetails({ alert }) {
 
 function DepthContext({ alert }) {
   const color = SEVERITY_COLOR[alert.severity] ?? "#7b8581";
-  const minDepth = alert.currentDepth - 30;
-  const maxDepth = alert.riskInterval[1] + 30;
+  const minDepth = alert.currentDepth - 40;
+  const maxDepth = alert.riskInterval[1] + 40;
   const span = maxDepth - minDepth || 1;
   const toPct = (d) => ((d - minDepth) / span) * 100;
 
   return (
-    <div className="mt-4">
+    <div className="mt-3.5">
       <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-wl-text-muted">
         Depth Context
       </div>
-      <div className="mt-2 rounded-[5px] border border-wl-border bg-wl-surface-2 px-4 py-3.5">
-        <div className="flex items-start gap-4">
-          <div className="relative ml-[70px] h-[130px] w-[3px] rounded-full bg-wl-border">
-            <div
-              className="absolute left-1/2 w-[40px] -translate-x-1/2 rounded-[2px] border border-dashed"
-              style={{
-                top: `${toPct(alert.riskInterval[0])}%`,
-                height: `${Math.max(toPct(alert.riskInterval[1]) - toPct(alert.riskInterval[0]), 2)}%`,
-                borderColor: `${color}80`,
-                backgroundColor: `${color}12`,
-              }}
-            />
-            <div
-              className="absolute -left-[64px] z-10 whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
-              style={{ top: `${toPct(alert.currentDepth)}%`, transform: "translateY(-50%)" }}
-            >
-              {alert.wellId} · {alert.currentDepth.toLocaleString("en-IN")} m
-            </div>
-            <div
-              className="absolute -left-[4px] z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"
-              style={{ top: `${toPct(alert.currentDepth)}%` }}
-            />
-            <div
-              className="absolute left-2 flex items-center gap-1.5 whitespace-nowrap"
-              style={{ top: `${toPct(alert.riskInterval[0])}%`, transform: "translateY(-50%)" }}
-            >
-              <span className="tabular font-mono text-[10.5px] text-wl-text-secondary">
-                {alert.riskInterval[0].toLocaleString("en-IN")} m
-              </span>
-              <span className="text-[10.5px]" style={{ color }}>
-                zone top
-              </span>
+      <div className="mt-2 rounded-[5px] border border-wl-border bg-wl-surface-2 px-3.5 py-3">
+        <div className="flex items-center gap-4">
+          {/* Vertical depth indicator */}
+          <div className="relative h-[130px] w-[186px] shrink-0">
+            <div className="relative ml-[118px] h-full w-[3px] rounded-full bg-wl-border">
+              <div
+                className="absolute left-1/2 w-[34px] -translate-x-1/2 rounded-[2px] border border-dashed"
+                style={{
+                  top: `${toPct(alert.riskInterval[0])}%`,
+                  height: `${Math.max(toPct(alert.riskInterval[1]) - toPct(alert.riskInterval[0]), 2)}%`,
+                  borderColor: `${color}80`,
+                  backgroundColor: `${color}12`,
+                }}
+                title={`Historical risk zone ${alert.riskInterval[0].toLocaleString("en-IN")} - ${alert.riskInterval[1].toLocaleString("en-IN")} m`}
+              />
+              <div
+                className="absolute -left-[118px] z-10 w-[118px] whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
+                style={{ top: `${toPct(alert.currentDepth)}%`, transform: "translateY(-50%)" }}
+              >
+                {alert.wellId} · {alert.currentDepth.toLocaleString("en-IN")} m
+              </div>
+              <div
+                className="absolute -left-[4px] z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"
+                style={{ top: `${toPct(alert.currentDepth)}%` }}
+              />
+              <div
+                className="absolute left-[24px] flex items-center gap-1 whitespace-nowrap"
+                style={{ top: `${toPct(alert.riskInterval[0])}%`, transform: "translateY(-50%)" }}
+              >
+                <span className="tabular font-mono text-[10px] text-wl-text-secondary">
+                  {alert.riskInterval[0].toLocaleString("en-IN")} m
+                </span>
+                <span className="text-[10px] font-medium" style={{ color }}>
+                  zone top
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="space-y-2.5 pt-1">
+          {/* Readouts */}
+          <div className="space-y-2.5 border-l border-wl-border pl-4">
             <div>
-              <div className="text-[9.5px] font-semibold uppercase tracking-[0.12em] text-wl-text-muted">
+              <div className="text-[9px] font-semibold uppercase tracking-[0.12em] text-wl-text-muted">
                 Current Depth
               </div>
               <div className="tabular mt-0.5 font-mono text-[13px] font-semibold text-wl-text-primary">
                 {alert.currentDepth.toLocaleString("en-IN")} m
               </div>
             </div>
-            <div className="flex items-center gap-1.5 text-[11px] text-wl-text-muted">
-              <span className="tabular font-mono">{alert.distanceToRiskM} m</span>
-              to zone
+            <div>
+              <div className="text-[9px] font-semibold uppercase tracking-[0.12em] text-wl-text-muted">
+                Distance to Zone
+              </div>
+              <div className="tabular mt-0.5 font-mono text-[13px] font-semibold" style={{ color }}>
+                {alert.distanceToRiskM} m
+              </div>
             </div>
             <div>
-              <div className="text-[9.5px] font-semibold uppercase tracking-[0.12em] text-wl-text-muted">
+              <div className="text-[9px] font-semibold uppercase tracking-[0.12em] text-wl-text-muted">
                 Historical Risk Zone
               </div>
               <div className="tabular mt-0.5 font-mono text-[13px] font-semibold" style={{ color }}>
@@ -246,14 +250,14 @@ function DepthContext({ alert }) {
   );
 }
 
-function HistoricalResponse({ event, severityColor }) {
+function HistoricalResponse({ event }) {
   return (
-    <div className="mt-4">
+    <div className="mt-3.5">
       <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-wl-text-muted">
         Historical Response
       </div>
       <div className="mt-2 rounded-[5px] border border-wl-border bg-wl-surface-2 px-3.5 py-3">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-2.5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2">
           <Kv label="Historical Event" value={event.eventType} />
           <Kv label="Representative Well" value={event.wellId} />
           <Kv label="Event Depth" value={`${event.depth.toLocaleString("en-IN")} m`} mono />
@@ -261,15 +265,15 @@ function HistoricalResponse({ event, severityColor }) {
           <Kv label="Mitigation Used" value={event.mitigation} />
           <Kv label="NPT" value={`${event.nptHours} hours`} mono />
         </div>
-        <div className="mt-2.5 border-t border-wl-border/70 pt-2.5 text-[12px] text-wl-text-secondary">
+        <div className="mt-2 border-t border-wl-border/70 pt-2 text-[12px] text-wl-text-secondary">
           <span className="font-medium text-wl-text-primary">Operational response: </span>
           {event.operationalResponse}
         </div>
-        <div className="mt-1.5 text-[12px] text-wl-text-secondary">
+        <div className="mt-1 text-[12px] text-wl-text-secondary">
           <span className="font-medium text-wl-text-primary">Outcome: </span>
           {event.outcome}
         </div>
-        <div className="mt-3 border-t border-wl-border pt-2.5 text-[11px] leading-relaxed text-wl-text-secondary">
+        <div className="mt-2 border-t border-wl-border pt-2 text-[11px] leading-relaxed text-wl-text-secondary">
           Recorded historical response, not a prescription. Review with the drilling team before acting.
         </div>
       </div>

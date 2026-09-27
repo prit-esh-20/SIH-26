@@ -83,7 +83,7 @@ export default function Alerts() {
 
       <AlertsFilterBar filters={filters} onChange={setFilters} />
 
-      {/* Two-column layout: list left, details right */}
+      {/* Two-column layout: list left, sticky details right */}
       <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)]">
         <AlertsList
           alerts={filtered}
@@ -91,7 +91,9 @@ export default function Alerts() {
           selectedId={effectiveSelectedId}
           onSelect={setSelectedId}
         />
-        <AlertDetails alert={selected} />
+        <div className="xl:sticky xl:top-20 xl:max-h-[calc(100vh-140px)] xl:overflow-y-auto">
+          <AlertDetails alert={selected} />
+        </div>
       </div>
     </div>
   );
