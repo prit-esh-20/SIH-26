@@ -6,7 +6,7 @@ import {
   getReportDocuments,
   getReportEvidence,
   getWell,
-  comparableWells,
+  getComparableWells,
 } from "../../data/mockData.js";
 
 const SIMILARITY_FILL = "#E8751A";
@@ -19,7 +19,7 @@ export default function ReportAnalysis({ report }) {
   const well = getWell(report.wellId);
   const evidence = getReportEvidence(report);
   const docs = getReportDocuments(report);
-  const comps = comparableWells;
+  const comps = getComparableWells(report.wellId);
 
   const riskRows = [
     { severity: "High", label: "Mud Loss Risk", pct: 82, zone: "2,870 - 2,900 m", dist: "10 m from current depth" },

@@ -3,13 +3,13 @@ import SectionHeader from "../common/SectionHeader.jsx";
 import { StatusIndicator } from "../common/StatusIndicator.jsx";
 import MetricDisplay from "../common/MetricDisplay.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
-import { drillingParameters, drillingParametersFallback, getWell } from "../../data/mockData.js";
+import { drillingParameters, getWell } from "../../data/mockData.js";
 
 export default function CurrentWellContext() {
   const { activeWellId } = useWellContext();
   const well = getWell(activeWellId);
-  const params = drillingParameters[activeWellId] ?? drillingParametersFallback;
-  const mudWeight = params.find((p) => p.key === "mudWeight");
+  const params = drillingParameters[activeWellId];
+  const mudWeight = params?.find((p) => p.key === "mudWeight");
 
   return (
     <section className="wl-card">

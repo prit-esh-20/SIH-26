@@ -12,7 +12,6 @@ import SectionHeader from "../common/SectionHeader.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
 import {
   drillingTrends,
-  drillingTrendsFallback,
   getWell,
 } from "../../data/mockData.js";
 
@@ -38,9 +37,9 @@ function ChartTooltip({ active, payload, label }) {
 export default function DrillingCharts() {
   const { activeWellId } = useWellContext();
   const well = getWell(activeWellId);
-  const isOwnTrend = Boolean(drillingTrends[activeWellId]);
-  const data = drillingTrends[activeWellId] ?? drillingTrendsFallback;
-  const sectionLabel = isOwnTrend && well ? well.holeSection : "representative profile";
+  const hasOwnTrend = Boolean(drillingTrends[activeWellId]);
+  const data = hasOwnTrend ? drillingTrends[activeWellId] : null;
+  const sectionLabel = hasOwnTrend && well ? well.holeSection : "no trend data for this well";
 
   return (
     <section className="wl-card flex flex-col">
@@ -53,18 +52,24 @@ export default function DrillingCharts() {
           </span>
         }
       />
-      <div className="grid grid-cols-1 gap-4 px-4 py-4 lg:grid-cols-3">
-        <MiniLineChart
-          data={data}
-          dataKey="torque"
-          label="Torque"
-          unit="kNm"
-          color="#E8751A"
-          yLabel="kNm"
-        />
-        <MiniLineChart data={data} dataKey="rop" label="ROP" unit="m/hr" color="#5B7687" yLabel="m/hr" />
-        <MiniLineChart data={data} dataKey="pressure" label="Pressure" unit="psi" color="#3F7D55" yLabel="psi" />
-      </div>
+      {data ? (
+        <div className="grid grid-cols-1 gap-4 px-4 py-4 lg:grid-cols-3">
+          <MiniLineChart
+            data={data}
+            dataKey="torque"
+            label="Torque"
+            unit="kNm"
+            color="#E8751A"
+            yLabel="kNm"
+          />
+          <MiniLineChart data={data} dataKey="rop" label="ROP" unit="m/hr" color="#5B7687" yLabel="m/hr" />
+          <MiniLineChart data={data} dataKey="pressure" label="Pressure" unit="psi" color="#3F7D55" yLabel="psi" />
+        </div>
+      ) : (
+        <div className="flex-1 flex items-center justify-center px-4 py-8 text-center text-[12.5px] text-wl-text-muted">
+          No representative drilling trend data available for {activeWellId}.
+        </div>
+      )}
     </section>
   );
 }

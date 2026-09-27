@@ -147,8 +147,6 @@ export const drillingParameters = {
   ],
 };
 
-export const drillingParametersFallback = drillingParameters["W-205"];
-
 // ---------------------------------------------------------------------------
 // Drilling trend data: depth-indexed series for the charts.
 // Representative, depth-correlated profiles for W-205's 8-1/2" section.
@@ -168,59 +166,276 @@ export const drillingTrends = {
   ],
 };
 
-export const drillingTrendsFallback = drillingTrends["W-205"];
-
 // ---------------------------------------------------------------------------
-// Comparable wells: offsets relevant to the current well W-205.
+// Comparable wells: offsets relevant to each well.
 // similarity is a representative combined index (geographic, geological,
 // depth, operational and event similarity). Not a live algorithm output.
-// events is derived from historicalEvents below (see comparableEventsFor).
+// events is derived from historicalEvents below.
 // ---------------------------------------------------------------------------
 
-// Base offsets for W-205. Event counts are recomputed from the dataset at the
-// bottom of this file, so they always match historicalEvents.
-const comparableWellsBase = [
-  {
-    wellId: "W-201",
-    distanceKm: 1.8,
-    formation: "F3",
-    similarity: 87,
-    relevantInterval: [2830, 2910],
-    similarityBreakdown: { geographic: 92, geological: 95, depth: 88, operational: 81, event: 79 },
-  },
-  {
-    wellId: "W-198",
-    distanceKm: 3.2,
-    formation: "F3",
-    similarity: 81,
-    relevantInterval: [2800, 2960],
-    similarityBreakdown: { geographic: 89, geological: 93, depth: 82, operational: 78, event: 68 },
-  },
-  {
-    wellId: "W-187",
-    distanceKm: 4.7,
-    formation: "F3",
-    similarity: 72,
-    relevantInterval: [2850, 3030],
-    similarityBreakdown: { geographic: 78, geological: 88, depth: 76, operational: 72, event: 55 },
-  },
-  {
-    wellId: "W-176",
-    distanceKm: 2.6,
-    formation: "F3",
-    similarity: 64,
-    relevantInterval: [2790, 2910],
-    similarityBreakdown: { geographic: 84, geological: 90, depth: 61, operational: 55, event: 34 },
-  },
-  {
-    wellId: "W-163",
-    distanceKm: 5.9,
-    formation: "F4",
-    similarity: 31,
-    relevantInterval: [3420, 3600],
-    similarityBreakdown: { geographic: 62, geological: 41, depth: 30, operational: 22, event: 12 },
-  },
-];
+const comparableWellsByWell = {
+  "W-205": [
+    {
+      wellId: "W-201",
+      distanceKm: 1.8,
+      formation: "F3",
+      similarity: 87,
+      relevantInterval: [2830, 2910],
+      similarityBreakdown: { geographic: 92, geological: 95, depth: 88, operational: 81, event: 79 },
+    },
+    {
+      wellId: "W-198",
+      distanceKm: 3.2,
+      formation: "F3",
+      similarity: 81,
+      relevantInterval: [2800, 2960],
+      similarityBreakdown: { geographic: 89, geological: 93, depth: 82, operational: 78, event: 68 },
+    },
+    {
+      wellId: "W-187",
+      distanceKm: 4.7,
+      formation: "F3",
+      similarity: 72,
+      relevantInterval: [2850, 3030],
+      similarityBreakdown: { geographic: 78, geological: 88, depth: 76, operational: 72, event: 55 },
+    },
+    {
+      wellId: "W-176",
+      distanceKm: 2.6,
+      formation: "F3",
+      similarity: 64,
+      relevantInterval: [2790, 2910],
+      similarityBreakdown: { geographic: 84, geological: 90, depth: 61, operational: 55, event: 34 },
+    },
+    {
+      wellId: "W-163",
+      distanceKm: 5.9,
+      formation: "F4",
+      similarity: 31,
+      relevantInterval: [3420, 3600],
+      similarityBreakdown: { geographic: 62, geological: 41, depth: 30, operational: 22, event: 12 },
+    },
+  ],
+  "W-201": [
+    {
+      wellId: "W-205",
+      distanceKm: 1.8,
+      formation: "F3",
+      similarity: 87,
+      relevantInterval: [2830, 2910],
+      similarityBreakdown: { geographic: 92, geological: 95, depth: 88, operational: 81, event: 79 },
+    },
+    {
+      wellId: "W-198",
+      distanceKm: 2.1,
+      formation: "F3",
+      similarity: 84,
+      relevantInterval: [2870, 3000],
+      similarityBreakdown: { geographic: 90, geological: 94, depth: 85, operational: 80, event: 72 },
+    },
+    {
+      wellId: "W-187",
+      distanceKm: 3.8,
+      formation: "F3",
+      similarity: 76,
+      relevantInterval: [2880, 3050],
+      similarityBreakdown: { geographic: 82, geological: 89, depth: 78, operational: 74, event: 61 },
+    },
+    {
+      wellId: "W-176",
+      distanceKm: 2.9,
+      formation: "F3",
+      similarity: 68,
+      relevantInterval: [2820, 2950],
+      similarityBreakdown: { geographic: 86, geological: 91, depth: 64, operational: 58, event: 38 },
+    },
+    {
+      wellId: "W-163",
+      distanceKm: 6.2,
+      formation: "F4",
+      similarity: 28,
+      relevantInterval: [3420, 3600],
+      similarityBreakdown: { geographic: 58, geological: 38, depth: 28, operational: 20, event: 10 },
+    },
+  ],
+  "W-198": [
+    {
+      wellId: "W-205",
+      distanceKm: 3.2,
+      formation: "F3",
+      similarity: 81,
+      relevantInterval: [2800, 2960],
+      similarityBreakdown: { geographic: 89, geological: 93, depth: 82, operational: 78, event: 68 },
+    },
+    {
+      wellId: "W-201",
+      distanceKm: 2.1,
+      formation: "F3",
+      similarity: 84,
+      relevantInterval: [2870, 3000],
+      similarityBreakdown: { geographic: 90, geological: 94, depth: 85, operational: 80, event: 72 },
+    },
+    {
+      wellId: "W-187",
+      distanceKm: 3.1,
+      formation: "F3",
+      similarity: 79,
+      relevantInterval: [2850, 3040],
+      similarityBreakdown: { geographic: 84, geological: 90, depth: 80, operational: 76, event: 65 },
+    },
+    {
+      wellId: "W-176",
+      distanceKm: 3.5,
+      formation: "F3",
+      similarity: 66,
+      relevantInterval: [2780, 2930],
+      similarityBreakdown: { geographic: 81, geological: 88, depth: 60, operational: 54, event: 32 },
+    },
+    {
+      wellId: "W-163",
+      distanceKm: 4.8,
+      formation: "F4",
+      similarity: 33,
+      relevantInterval: [3420, 3600],
+      similarityBreakdown: { geographic: 65, geological: 44, depth: 32, operational: 24, event: 14 },
+    },
+  ],
+  "W-187": [
+    {
+      wellId: "W-205",
+      distanceKm: 4.7,
+      formation: "F3",
+      similarity: 72,
+      relevantInterval: [2850, 3030],
+      similarityBreakdown: { geographic: 78, geological: 88, depth: 76, operational: 72, event: 55 },
+    },
+    {
+      wellId: "W-201",
+      distanceKm: 3.8,
+      formation: "F3",
+      similarity: 76,
+      relevantInterval: [2880, 3050],
+      similarityBreakdown: { geographic: 82, geological: 89, depth: 78, operational: 74, event: 61 },
+    },
+    {
+      wellId: "W-198",
+      distanceKm: 3.1,
+      formation: "F3",
+      similarity: 79,
+      relevantInterval: [2850, 3040],
+      similarityBreakdown: { geographic: 84, geological: 90, depth: 80, operational: 76, event: 65 },
+    },
+    {
+      wellId: "W-176",
+      distanceKm: 4.2,
+      formation: "F3",
+      similarity: 62,
+      relevantInterval: [2840, 2980],
+      similarityBreakdown: { geographic: 75, geological: 85, depth: 58, operational: 52, event: 30 },
+    },
+    {
+      wellId: "W-163",
+      distanceKm: 4.1,
+      formation: "F4",
+      similarity: 68,
+      relevantInterval: [3120, 3350],
+      similarityBreakdown: { geographic: 72, geological: 78, depth: 65, operational: 60, event: 48 },
+    },
+  ],
+  "W-176": [
+    {
+      wellId: "W-205",
+      distanceKm: 2.6,
+      formation: "F3",
+      similarity: 64,
+      relevantInterval: [2790, 2910],
+      similarityBreakdown: { geographic: 84, geological: 90, depth: 61, operational: 55, event: 34 },
+    },
+    {
+      wellId: "W-201",
+      distanceKm: 2.9,
+      formation: "F3",
+      similarity: 68,
+      relevantInterval: [2820, 2950],
+      similarityBreakdown: { geographic: 86, geological: 91, depth: 64, operational: 58, event: 38 },
+    },
+    {
+      wellId: "W-198",
+      distanceKm: 3.5,
+      formation: "F3",
+      similarity: 66,
+      relevantInterval: [2780, 2930],
+      similarityBreakdown: { geographic: 81, geological: 88, depth: 60, operational: 54, event: 32 },
+    },
+    {
+      wellId: "W-187",
+      distanceKm: 4.2,
+      formation: "F3",
+      similarity: 62,
+      relevantInterval: [2840, 2980],
+      similarityBreakdown: { geographic: 75, geological: 85, depth: 58, operational: 52, event: 30 },
+    },
+    {
+      wellId: "W-163",
+      distanceKm: 6.8,
+      formation: "F4",
+      similarity: 24,
+      relevantInterval: [3420, 3600],
+      similarityBreakdown: { geographic: 55, geological: 35, depth: 25, operational: 18, event: 8 },
+    },
+  ],
+  "W-163": [
+    {
+      wellId: "W-205",
+      distanceKm: 5.9,
+      formation: "F4",
+      similarity: 31,
+      relevantInterval: [3420, 3600],
+      similarityBreakdown: { geographic: 62, geological: 41, depth: 30, operational: 22, event: 12 },
+    },
+    {
+      wellId: "W-201",
+      distanceKm: 6.2,
+      formation: "F4",
+      similarity: 28,
+      relevantInterval: [3420, 3600],
+      similarityBreakdown: { geographic: 58, geological: 38, depth: 28, operational: 20, event: 10 },
+    },
+    {
+      wellId: "W-198",
+      distanceKm: 4.8,
+      formation: "F4",
+      similarity: 33,
+      relevantInterval: [3420, 3600],
+      similarityBreakdown: { geographic: 65, geological: 44, depth: 32, operational: 24, event: 14 },
+    },
+    {
+      wellId: "W-187",
+      distanceKm: 4.1,
+      formation: "F4",
+      similarity: 68,
+      relevantInterval: [3120, 3350],
+      similarityBreakdown: { geographic: 72, geological: 78, depth: 65, operational: 60, event: 48 },
+    },
+    {
+      wellId: "W-176",
+      distanceKm: 6.8,
+      formation: "F4",
+      similarity: 24,
+      relevantInterval: [3420, 3600],
+      similarityBreakdown: { geographic: 55, geological: 35, depth: 25, operational: 18, event: 8 },
+    },
+  ],
+};
+
+// Helper to get comparable wells for any well, with event counts derived from historicalEvents
+function getComparableWellsForWell(wellId) {
+  const base = comparableWellsByWell[wellId] ?? [];
+  return base.map((c) => ({
+    ...c,
+    events: historicalEvents.filter((e) => e.wellId === c.wellId).length,
+  }));
+}
 
 // ---------------------------------------------------------------------------
 // Historical events. Every event references an existing well and a document.
@@ -756,11 +971,7 @@ export const documentLibrary = [...eventLinkedDocuments, ...wellLevelDocuments];
 
 // Comparable wells for the current well, with event counts derived from
 // historicalEvents so the table, map and popups always agree.
-export const comparableWells = comparableWellsBase.map((c) => ({
-  ...c,
-  events: historicalEvents.filter((e) => e.wellId === c.wellId).length,
-}));
-
+// DEPRECATED: Use getComparableWells(wellId) instead for dynamic per-well data.
 // ---------------------------------------------------------------------------
 // Look-up helpers
 // ---------------------------------------------------------------------------
@@ -774,7 +985,7 @@ export function getEventsForWell(wellId) {
 }
 
 export function getComparableWells(wellId) {
-  return comparableWells.filter((c) => c.wellId !== wellId);
+  return getComparableWellsForWell(wellId);
 }
 
 export function getRiskAlerts(wellId) {
@@ -826,8 +1037,10 @@ export function getFormationContext(wellId) {
 }
 
 // Comparable-well entry (distance, similarity, breakdown, relevant interval).
-export function getComparableEntry(wellId) {
-  return comparableWells.find((c) => c.wellId === wellId) ?? null;
+// Requires activeWellId to look up the correct comparable wells list.
+export function getComparableEntry(activeWellId, wellId) {
+  const list = comparableWellsByWell[activeWellId] ?? [];
+  return list.find((c) => c.wellId === wellId) ?? null;
 }
 
 export function getEventById(eventId) {

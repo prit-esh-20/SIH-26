@@ -4,14 +4,14 @@ import SectionHeader from "../common/SectionHeader.jsx";
 import SeverityChip from "../common/SeverityChip.jsx";
 import EventDetailDrawer from "../common/EventDetailDrawer.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
-import { comparableWells, historicalEvents } from "../../data/mockData.js";
+import { getComparableWells, historicalEvents } from "../../data/mockData.js";
 
 export default function HistoricalEvents() {
   const { activeWellId } = useWellContext();
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const events = useMemo(() => {
-    const nearby = comparableWells
+    const nearby = getComparableWells(activeWellId)
       .filter((c) => c.wellId !== activeWellId)
       .map((c) => c.wellId);
     return historicalEvents

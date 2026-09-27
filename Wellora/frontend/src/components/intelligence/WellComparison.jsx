@@ -3,7 +3,6 @@ import SectionHeader from "../common/SectionHeader.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
 import {
   drillingParameters,
-  drillingParametersFallback,
   getComparableEntry,
   getWell,
 } from "../../data/mockData.js";
@@ -23,16 +22,35 @@ export default function WellComparison({ selectedWellId, selectedEvent }) {
   const { activeWellId } = useWellContext();
   const current = getWell(activeWellId);
   const historical = getWell(selectedWellId);
-  const entry = getComparableEntry(selectedWellId);
+  const entry = getComparableEntry(activeWellId, selectedWellId);
 
-  const currentParams = drillingParameters[activeWellId] ?? drillingParametersFallback;
-  const cur = (key) => currentParams.find((p) => p.key === key)?.value ?? "-";
+  const currentParams = drillingParameters[activeWellId];
+  const cur = (key) => currentParams?.find((p) => p.key === key)?.value ?? "-";
 
   // Event-level parameters when an event is selected, otherwise well snapshot.
   const ep = selectedEvent?.params;
   const fmt = (v, digits = 1) => (typeof v === "number" ? v.toFixed(digits) : "-");
   const diff = (a, b) =>
     typeof a === "number" && typeof b === "number" ? (a - b >= 0 ? "+" : "") + (a - b).toFixed(1) : "-";
+
+  if (!currentParams) {
+    return (
+      <section className="wl-card flex flex-col">
+        <SectionHeader
+          icon={GitCompare}
+          title={`Current Well vs ${selectedWellId}`}
+          actions={
+            <span className="text-[10.5px] text-wl-text-muted">
+              {selectedEvent ? `At selected event, ${selectedEvent.depth.toLocaleString("en-IN")} m` : "Well snapshot"}
+            </span>
+          }
+        />
+        <div className="flex-1 flex items-center justify-center px-4 py-8 text-center text-[12.5px] text-wl-text-muted">
+          No drilling parameter data available for {activeWellId}.
+        </div>
+      </section>
+    );
+  }
 
   const rows = [
     {
@@ -41,8 +59,8 @@ export default function WellComparison({ selectedWellId, selectedEvent }) {
       historical: selectedEvent
         ? `${selectedEvent.depth.toLocaleString("en-IN")} m`
         : entry
-          ? `${entry.relevantInterval[0].toLocaleString("en-IN")} - ${entry.relevantInterval[1].toLocaleString("en-IN")} m`
-          : "-",
+        ? `${entry.relevantInterval[0].toLocaleString("en-IN")} - ${entry.relevantInterval[1].toLocaleString("en-IN")} m`
+        : "-",
       difference:
         selectedEvent && current ? `${selectedEvent.depth - current.depth >= 0 ? "+" : ""}${selectedEvent.depth - current.depth} m` : "-",
     },

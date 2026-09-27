@@ -2,6 +2,7 @@ import { Layers, MapPin } from "lucide-react";
 import SectionHeader from "../common/SectionHeader.jsx";
 import MetricDisplay from "../common/MetricDisplay.jsx";
 import SeverityChip from "../common/SeverityChip.jsx";
+import { useWellContext } from "../../context/WellContext.jsx";
 import {
   getComparableEntry,
   getEventsForWell,
@@ -10,7 +11,8 @@ import {
 } from "../../data/mockData.js";
 
 export default function SelectedWellSummary({ selectedWellId }) {
-  const entry = getComparableEntry(selectedWellId);
+  const { activeWellId } = useWellContext();
+  const entry = getComparableEntry(activeWellId, selectedWellId);
   const well = getWell(selectedWellId);
   const events = getEventsForWell(selectedWellId);
   const npt = getTotalNptForWell(selectedWellId);

@@ -2,13 +2,13 @@ import { Users, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SectionHeader from "../common/SectionHeader.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
-import { comparableWells } from "../../data/mockData.js";
+import { getComparableWells } from "../../data/mockData.js";
 
 export default function RelatedWellsCard({ wellId }) {
-  const { setActiveWellId } = useWellContext();
+  const { activeWellId, setActiveWellId } = useWellContext();
   const navigate = useNavigate();
 
-  const wells = comparableWells.filter((c) => c.wellId !== wellId);
+  const wells = getComparableWells(activeWellId).filter((c) => c.wellId !== wellId);
 
   const openWell = (wellId) => {
     setActiveWellId(wellId);

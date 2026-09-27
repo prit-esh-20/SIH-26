@@ -11,7 +11,7 @@ import {
 export default function WhyComparable({ selectedWellId }) {
   const { activeWellId } = useWellContext();
   const current = getWell(activeWellId);
-  const entry = getComparableEntry(selectedWellId);
+  const entry = getComparableEntry(activeWellId, selectedWellId);
   const events = getEventsForWell(selectedWellId);
 
   const factors = [

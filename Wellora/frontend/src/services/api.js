@@ -7,9 +7,7 @@
 
 import {
   drillingParameters as mockParameters,
-  drillingParametersFallback,
   drillingTrends as mockTrends,
-  drillingTrendsFallback,
   getComparableWells as getComparableWellsFromData,
   getEventsForWell as getEventsForWellFromData,
   getFormationContext,
@@ -55,11 +53,11 @@ export async function fetchEvents(wellId) {
 }
 
 export async function fetchParameters(wellId) {
-  return mockParameters[wellId] ?? drillingParametersFallback;
+  return mockParameters[wellId] ?? null;
 }
 
 export async function fetchTrends(wellId) {
-  return mockTrends[wellId] ?? drillingTrendsFallback;
+  return mockTrends[wellId] ?? null;
 }
 
 export async function fetchRiskAlerts(wellId) {

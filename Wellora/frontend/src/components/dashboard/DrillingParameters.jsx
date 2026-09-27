@@ -1,11 +1,27 @@
 import { Activity } from "lucide-react";
 import SectionHeader from "../common/SectionHeader.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
-import { drillingParameters, drillingParametersFallback } from "../../data/mockData.js";
+import { drillingParameters, getWell } from "../../data/mockData.js";
 
 export default function DrillingParameters() {
   const { activeWellId } = useWellContext();
-  const params = drillingParameters[activeWellId] ?? drillingParametersFallback;
+  const well = getWell(activeWellId);
+  const params = drillingParameters[activeWellId];
+
+  if (!params) {
+    return (
+      <section className="wl-card flex flex-col">
+        <SectionHeader
+          icon={Activity}
+          title="Drilling Parameters"
+          actions={<span className="text-[10.5px] text-wl-text-muted">Snapshot</span>}
+        />
+        <div className="flex-1 flex items-center justify-center px-4 py-8 text-center text-[12.5px] text-wl-text-muted">
+          No drilling parameter snapshot available for {activeWellId}.
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="wl-card flex flex-col">
