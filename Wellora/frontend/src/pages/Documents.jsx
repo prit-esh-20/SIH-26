@@ -8,7 +8,6 @@ import DocumentFilters, {
 import DocumentTable from "../components/documents/DocumentTable.jsx";
 import DocumentDetails from "../components/documents/DocumentDetails.jsx";
 import DocumentPreview from "../components/documents/DocumentPreview.jsx";
-import SourceEvidenceMini from "../components/documents/SourceEvidenceMini.jsx";
 import SourceEvidenceDrawer from "../components/intelligence/SourceEvidenceDrawer.jsx";
 import { documentLibrary, getEventById } from "../data/mockData.js";
 
@@ -72,25 +71,19 @@ export default function Documents() {
 
       <DocumentFilters filters={filters} onChange={setFilters} />
 
-      {/* Table + side panels */}
-      <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-3">
-        <div className="space-y-4 xl:col-span-2">
-          <DocumentTable
-            documents={sorted}
-            total={documentLibrary.length}
-            selectedId={effectiveSelectedId}
-            onSelect={setSelectedId}
-            sort={sort}
-            onSortChange={setSort}
-          />
-          <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
-            <DocumentDetails document={selected} onViewDocument={() => setDrawerOpen(true)} />
-            <DocumentPreview document={selected} onView={() => setDrawerOpen(true)} />
-          </div>
-        </div>
-        <div className="space-y-4">
-          <SourceEvidenceMini document={selected} />
-        </div>
+      {/* Full-width table, then a two-column lower row */}
+      <DocumentTable
+        documents={sorted}
+        total={documentLibrary.length}
+        selectedId={effectiveSelectedId}
+        onSelect={setSelectedId}
+        sort={sort}
+        onSortChange={setSort}
+      />
+
+      <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <DocumentDetails document={selected} onViewDocument={() => setDrawerOpen(true)} />
+        <DocumentPreview document={selected} onView={() => setDrawerOpen(true)} />
       </div>
 
       <SourceEvidenceDrawer
