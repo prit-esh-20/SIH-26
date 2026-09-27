@@ -5,7 +5,6 @@ import { Map as MapIcon } from "lucide-react";
 import SectionHeader from "../common/SectionHeader.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
 import {
-  getComparableEntry,
   getEventsForWell,
   getWell,
 } from "../../data/mockData.js";

@@ -8,7 +8,7 @@ import {
 } from "../../data/mockData.js";
 
 export default function SelectedWellPanel({ activeWellId, selectedWellId, onViewWell }) {
-  const entry = selectedWellId ? getComparableEntry(selectedWellId) : null;
+  const entry = selectedWellId ? getComparableEntry(activeWellId, selectedWellId) : null;
   const well = selectedWellId ? getWell(selectedWellId) : null;
   const current = getWell(activeWellId);
   const events = selectedWellId ? getEventsForWell(selectedWellId) : [];

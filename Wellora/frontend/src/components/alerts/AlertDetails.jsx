@@ -108,7 +108,7 @@ export default function AlertDetails({ alert }) {
           </div>
           <div className="mt-2 space-y-1.5">
             {alert.comparableWells.map((wellId) => {
-              const entry = getComparableEntry(wellId);
+              const entry = getComparableEntry(alert.wellId, wellId);
               const wellEvents = entry ? entry.events : getEventsForWell(wellId).length;
               return (
                 <button

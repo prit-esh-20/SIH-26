@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import { Map as MapIcon } from "lucide-react";
@@ -27,15 +27,30 @@ function currentWellIcon(id) {
   });
 }
 
-function FitBounds({ positions }) {
+function FitBounds({ positions, enabled }) {
   const map = useMap();
+  const fittedRef = useRef(false);
+
   useEffect(() => {
-    if (positions.length > 1) {
-      map.fitBounds(L.latLngBounds(positions), { padding: [46, 46] });
-    } else if (positions.length === 1) {
-      map.setView(positions[0], 13);
+    if (!enabled || positions.length === 0) return;
+
+    if (!fittedRef.current) {
+      if (positions.length > 1) {
+        map.fitBounds(L.latLngBounds(positions), {
+          padding: [40, 40],
+          maxZoom: 13,
+        });
+      } else {
+        map.setView(positions[0], 12);
+      }
+      fittedRef.current = true;
     }
-  }, [map, positions]);
+  }, [map, enabled, positions]);
+
+  useEffect(() => {
+    fittedRef.current = false;
+  }, [enabled]);
+
   return null;
 }
 
@@ -89,9 +104,8 @@ export default function NearbyWellsMap() {
       />
       <div className="h-[380px] w-full">
         <MapContainer
-          center={[26.78, 94.98]}
-          zoom={12}
-          scrollWheelZoom={false}
+          scrollWheelZoom={true}
+          maxZoom={13}
           className="h-full w-full"
         >
           <TileLayer
@@ -110,7 +124,7 @@ export default function NearbyWellsMap() {
               </Popup>
             </Marker>
           ))}
-          <FitBounds positions={positions} />
+          <FitBounds positions={positions} enabled={activeWellId} />
         </MapContainer>
       </div>
     </section>
