@@ -5,9 +5,24 @@ import SectionHeader from "../common/SectionHeader.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
 import { getWell } from "../../data/mockData.js";
 
+function getDepthLabel(status) {
+  switch (status) {
+    case "Drilling":
+      return "Depth";
+    case "Suspended":
+      return "Suspended At";
+    case "Completed":
+    case "Plug and Abandon":
+      return "Final Depth";
+    default:
+      return "Depth";
+  }
+}
+
 export default function CurrentWell() {
   const { activeWellId } = useWellContext();
   const well = getWell(activeWellId);
+  const depthLabel = well ? getDepthLabel(well.status) : "Depth";
 
   return (
     <section className="wl-card">
@@ -35,7 +50,7 @@ export default function CurrentWell() {
 
         <div className="h-12 w-px bg-wl-border" />
 
-        <MetricDisplay label="Depth" value={(well?.depth ?? 0).toLocaleString("en-IN")} unit="m" size="lg" />
+        <MetricDisplay label={depthLabel} value={(well?.depth ?? 0).toLocaleString("en-IN")} unit="m" size="lg" />
         <MetricDisplay label="Formation" value={well?.formation ?? "-"} size="lg" />
         <MetricDisplay label="Hole Section" value={well?.holeSection ?? "-"} size="lg" />
 

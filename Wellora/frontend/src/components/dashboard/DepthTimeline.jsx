@@ -22,6 +22,20 @@ const MIN_VIZ_HEIGHT = 240;
 const MAX_VIZ_HEIGHT = 340;
 const EVENT_HEIGHT_INCREMENT = 18;
 
+function getDepthLabel(status) {
+  switch (status) {
+    case "Drilling":
+      return "Current Depth";
+    case "Suspended":
+      return "Suspended At";
+    case "Completed":
+    case "Plug and Abandon":
+      return "Final Depth";
+    default:
+      return "Current Depth";
+  }
+}
+
 export default function DepthTimeline() {
   const { activeWellId } = useWellContext();
   const well = getWell(activeWellId);
@@ -64,6 +78,9 @@ export default function DepthTimeline() {
     side: idx % 2 === 0 ? "left" : "right",
   }));
 
+  const depthLabel = getDepthLabel(well.status);
+  const markerLabel = `${activeWellId} · ${currentDepth.toLocaleString("en-IN")} m`;
+
   return (
     <section className="wl-card flex flex-col">
       <SectionHeader
@@ -98,7 +115,7 @@ export default function DepthTimeline() {
               className="absolute left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
               style={{ top: `${depthToPct(currentDepth)}%`, transform: "translate(-50%, -50%)" }}
             >
-              {activeWellId} · {currentDepth.toLocaleString("en-IN")} m
+              {markerLabel}
             </div>
             <div
               className="absolute left-1/2 -translate-x-1/2 z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"
@@ -136,7 +153,7 @@ export default function DepthTimeline() {
               className="absolute left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-[3px] border border-wl-accent-dark bg-wl-accent-light px-1.5 py-0.5 text-[10px] font-semibold text-wl-text-primary"
               style={{ top: `${depthToPct(currentDepth)}%`, transform: "translate(-50%, -50%)" }}
             >
-              {activeWellId} · {currentDepth.toLocaleString("en-IN")} m
+              {markerLabel}
             </div>
             <div
               className="absolute left-1/2 -translate-x-1/2 z-10 h-[11px] w-[11px] -translate-y-1/2 rounded-full border-2 border-wl-surface bg-wl-accent"

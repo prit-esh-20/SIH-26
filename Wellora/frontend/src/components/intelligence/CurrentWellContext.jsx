@@ -5,11 +5,26 @@ import MetricDisplay from "../common/MetricDisplay.jsx";
 import { useWellContext } from "../../context/WellContext.jsx";
 import { drillingParameters, getWell } from "../../data/mockData.js";
 
+function getDepthLabel(status) {
+  switch (status) {
+    case "Drilling":
+      return "Depth";
+    case "Suspended":
+      return "Suspended At";
+    case "Completed":
+    case "Plug and Abandon":
+      return "Final Depth";
+    default:
+      return "Depth";
+  }
+}
+
 export default function CurrentWellContext() {
   const { activeWellId } = useWellContext();
   const well = getWell(activeWellId);
   const params = drillingParameters[activeWellId];
   const mudWeight = params?.find((p) => p.key === "mudWeight");
+  const depthLabel = well ? getDepthLabel(well.status) : "Depth";
 
   return (
     <section className="wl-card">
@@ -33,7 +48,7 @@ export default function CurrentWellContext() {
 
         <div className="h-11 w-px bg-wl-border" />
 
-        <MetricDisplay label="Depth" value={(well?.depth ?? 0).toLocaleString("en-IN")} unit="m" />
+        <MetricDisplay label={depthLabel} value={(well?.depth ?? 0).toLocaleString("en-IN")} unit="m" />
         <MetricDisplay label="Formation" value={well?.formation ?? "-"} />
         <MetricDisplay label="Hole Section" value={well?.holeSection ?? "-"} />
         <MetricDisplay label="Current Mud Weight" value={mudWeight?.value.toFixed(2) ?? "-"} unit={mudWeight?.unit} />

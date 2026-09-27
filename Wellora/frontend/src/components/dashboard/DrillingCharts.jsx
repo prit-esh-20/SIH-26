@@ -50,6 +50,20 @@ function getStatusColor(status) {
   }
 }
 
+function getDepthLabel(status) {
+  switch (status) {
+    case "Drilling":
+      return "Current Depth";
+    case "Suspended":
+      return "Suspended At";
+    case "Completed":
+    case "Plug and Abandon":
+      return "Final Depth";
+    default:
+      return "Current Depth";
+  }
+}
+
 export default function DrillingCharts() {
   const { activeWellId } = useWellContext();
   const well = getWell(activeWellId);
@@ -142,7 +156,7 @@ export default function DrillingCharts() {
         {/* Status Header Row */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11.5px]">
           <StatItem label="Status" value={status} valueColor={statusColor} />
-          <StatItem label="Current Depth" value={`${well.depth.toLocaleString("en-IN")} m`} mono />
+          <StatItem label={getDepthLabel(status)} value={`${well.depth.toLocaleString("en-IN")} m`} mono />
           <StatItem label="Formation" value={well.formation} />
           <StatItem label="Hole Section" value={well.holeSection} />
         </div>
