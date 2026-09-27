@@ -8,14 +8,14 @@ import DocumentFilters, {
 import DocumentTable from "../components/documents/DocumentTable.jsx";
 import DocumentDetails from "../components/documents/DocumentDetails.jsx";
 import DocumentPreview from "../components/documents/DocumentPreview.jsx";
-import SourceEvidenceDrawer from "../components/intelligence/SourceEvidenceDrawer.jsx";
+import DocumentViewer from "../components/documents/DocumentViewer.jsx";
 import { documentLibrary, getEventById } from "../data/mockData.js";
 
 export default function Documents() {
   const [filters, setFilters] = useState(EMPTY_DOCUMENT_FILTERS);
   const [selectedId, setSelectedId] = useState("DDR-W201-P37");
   const [sort, setSort] = useState({ key: "date", dir: "desc" });
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [viewerOpen, setViewerOpen] = useState(false);
 
   const filtered = useMemo(() => applyDocumentFilters(documentLibrary, filters), [filters]);
 
@@ -43,6 +43,8 @@ export default function Documents() {
     const types = new Set(documentLibrary.map((d) => d.type));
     return { documents: documentLibrary.length, wells: wells.size, types: types.size };
   }, []);
+
+  const handleViewDocument = () => setViewerOpen(true);
 
   return (
     <div className="mx-auto max-w-[1720px] space-y-4 pb-8">
@@ -82,15 +84,11 @@ export default function Documents() {
       />
 
       <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-        <DocumentDetails document={selected} onViewDocument={() => setDrawerOpen(true)} />
-        <DocumentPreview document={selected} onView={() => setDrawerOpen(true)} />
+        <DocumentDetails document={selected} onViewDocument={handleViewDocument} />
+        <DocumentPreview document={selected} onView={handleViewDocument} />
       </div>
 
-      <SourceEvidenceDrawer
-        event={selectedEvent}
-        open={drawerOpen && Boolean(selectedEvent)}
-        onClose={() => setDrawerOpen(false)}
-      />
+      <DocumentViewer document={selected} open={viewerOpen} onClose={() => setViewerOpen(false)} />
     </div>
   );
 }

@@ -919,6 +919,7 @@ const eventLinkedDocuments = historicalEvents.map((e) => ({
   depth: e.depth,
   page: e.page,
   status: "Available",
+  excerpt: e.excerpt,
 }));
 
 const wellLevelDocuments = [
@@ -934,6 +935,7 @@ const wellLevelDocuments = [
     depth: 3040,
     page: 1,
     status: "Available",
+    excerpt: "Well Completion Report for W-198. Well completed at 3,040 m in F3 formation. Five historical events recorded including mud loss, kick, and tight hole. Completed with 7\" liner and intelligent completion. Total NPT: 24.3 hours.",
   },
   {
     id: "WCR-W187-MAIN",
@@ -947,6 +949,7 @@ const wellLevelDocuments = [
     depth: 3120,
     page: 1,
     status: "Available",
+    excerpt: "Well Completion Report for W-187. Well plugged and abandoned at 3,120 m in F4 formation after reaching planned TD. Multiple stuck-pipe and mud-loss events during drilling. Standard P&A procedure executed with cement plugs across F3/F4 intervals.",
   },
   {
     id: "WCR-W176-MAIN",
@@ -960,6 +963,7 @@ const wellLevelDocuments = [
     depth: 2905,
     page: 1,
     status: "Available",
+    excerpt: "Well Completion Report for W-176. Well completed at 2,905 m in F3 formation. One minor mud-loss event recorded at 2,836 m. Completed with standard 8-1/2\" hole section. Total NPT: 2.1 hours.",
   },
   {
     id: "WCR-W163-MAIN",
@@ -973,6 +977,7 @@ const wellLevelDocuments = [
     depth: 3185,
     page: 1,
     status: "Available",
+    excerpt: "Well Completion Report for W-163. Well completed at 3,185 m in F4 formation. Two events recorded in F5 compact sand: bit balling at 3,495 m and mud loss at 3,560 m. Completed with 7\" liner. Total NPT: 6.7 hours.",
   },
   {
     id: "EVR-W201-37",
@@ -986,6 +991,7 @@ const wellLevelDocuments = [
     depth: 2875,
     page: 1,
     status: "Available",
+    excerpt: "Event Report for EV-001. Mud Loss at 2,875 m in F3 formation on W-201. Losses were observed while drilling through the friable F3 sand. Circulation was reduced and LCM treatment was initiated. Returns normalised after treatment and drilling continued. NPT: 8.5 hours.",
   },
   {
     id: "OPSR-W201-SUM",
@@ -999,6 +1005,7 @@ const wellLevelDocuments = [
     depth: 2980,
     page: 1,
     status: "Available",
+    excerpt: "Operations Report for W-201. Well suspended at 2,980 m in F3 formation after multiple mud-loss events and a stuck-pipe incident in offset wells. Operations paused for rig capability upgrade and optimized fluid design. Suspension date: 2026-06-15. Category: Geological / Drilling Condition.",
   },
 ];
 
