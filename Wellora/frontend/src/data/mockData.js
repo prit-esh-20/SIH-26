@@ -468,17 +468,29 @@ const f3StuckPipeEvents = historicalEvents.filter(
 );
 
 // Secondary alert: stuck-pipe risk deeper in the same F3 interval.
-const RA2_INTERVAL = [2905, 2915];
-const RA2_DISTANCE = RA2_INTERVAL[0] - W205.depth; // 45 m
+const RA2_INTERVAL = [2900, 2930];
+const RA2_DISTANCE = RA2_INTERVAL[0] - W205.depth; // 40 m
+
+// Tertiary alert: tight-hole risk flagged by offset tight-hole events in F3.
+const RA3_INTERVAL = [2884, 2910];
+const RA3_DISTANCE = RA3_INTERVAL[0] - W205.depth; // 24 m
+
+const f3TightHoleEvents = historicalEvents.filter(
+  (e) => e.formation === "F3" && e.eventType === "Tight Hole"
+);
 
 export const riskAlerts = {
   "W-205": [
     {
       id: "RA-205-1",
+      wellId: "W-205",
       riskType: "Mud Loss",
       riskScore: 0.82,
       confidence: 0.82,
       severity: "High",
+      formation: "F3",
+      status: "Approaching",
+      historicalEvents: f3MudLossEvents.length,
       currentDepth: W205.depth,
       riskInterval: RA1_INTERVAL,
       distanceToRiskM: RA1_DISTANCE,
@@ -525,16 +537,21 @@ export const riskAlerts = {
     },
     {
       id: "RA-205-2",
+      wellId: "W-205",
       riskType: "Stuck Pipe",
       riskScore: 0.54,
       confidence: 0.61,
       severity: "Medium",
+      formation: "F3",
+      status: "Upcoming",
+      historicalEvents: f3StuckPipeEvents.length,
       currentDepth: W205.depth,
       riskInterval: RA2_INTERVAL,
       distanceToRiskM: RA2_DISTANCE,
-      comparableWells: ["W-187"],
+      comparableWells: ["W-187", "W-198"],
       evidence: [
         { wellId: "W-187", eventType: "Stuck Pipe", depth: 2910, document: "DDR-W187", page: 58 },
+        { wellId: "W-187", eventType: "Stuck Pipe", depth: 3020, document: "WCR-W187", page: 133 },
       ],
       mitigation: [{ wellId: "W-187", action: "Pipe-freeing pill + back-off precaution" }],
       basis: [
@@ -556,7 +573,52 @@ export const riskAlerts = {
         {
           label: "Historical stuck-pipe events",
           present: true,
-          detail: `${f3StuckPipeEvents.length} stuck-pipe event in F3 at ${f3StuckPipeEvents[0]?.depth.toLocaleString("en-IN")} m`,
+          detail: `${f3StuckPipeEvents.length} stuck-pipe events recorded in F3 across the dataset`,
+        },
+      ],
+    },
+    {
+      id: "RA-205-3",
+      wellId: "W-205",
+      riskType: "Tight Hole",
+      riskScore: 0.38,
+      confidence: 0.55,
+      severity: "Low",
+      formation: "F3",
+      status: "Upcoming",
+      historicalEvents: f3TightHoleEvents.length,
+      currentDepth: W205.depth,
+      riskInterval: RA3_INTERVAL,
+      distanceToRiskM: RA3_DISTANCE,
+      comparableWells: ["W-187", "W-198"],
+      evidence: [
+        { wellId: "W-187", eventType: "Tight Hole", depth: 2884, document: "DDR-W187", page: 52 },
+        { wellId: "W-198", eventType: "Tight Hole", depth: 2810, document: "DDR-W198", page: 64 },
+      ],
+      mitigation: [
+        { wellId: "W-187", action: "Reaming and increased mud weight" },
+        { wellId: "W-198", action: "Reaming while circulating" },
+      ],
+      basis: [
+        {
+          label: "Formation similarity",
+          present: true,
+          detail: "F3 matches both comparable wells",
+        },
+        {
+          label: "Depth approaching historical event zone",
+          present: true,
+          detail: `${RA3_DISTANCE} m to ${RA3_INTERVAL[0].toLocaleString("en-IN")} m`,
+        },
+        {
+          label: "Operational similarity",
+          present: true,
+          detail: `${W205.holeSection} section, comparable BHA family`,
+        },
+        {
+          label: "Historical tight-hole events",
+          present: true,
+          detail: `${f3TightHoleEvents.length} tight-hole events recorded in F3 across the dataset`,
         },
       ],
     },
@@ -717,6 +779,12 @@ export function getComparableWells(wellId) {
 
 export function getRiskAlerts(wellId) {
   return riskAlerts[wellId] ?? [];
+}
+
+// Flat list of every alert in the dataset, for the Alerts page list and
+// filters. Only wells with generated alerts appear here.
+export function getAllAlerts() {
+  return Object.values(riskAlerts).flat();
 }
 
 // Resolves an alert's evidence references against historicalEvents and

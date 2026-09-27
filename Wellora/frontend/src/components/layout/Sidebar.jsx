@@ -91,7 +91,7 @@ export default function Sidebar() {
         </NavGroup>
 
         <div className="mt-4">
-          <NavItem to="/alerts" icon={Bell} label="Alerts" disabled />
+          <NavItem to="/alerts" icon={Bell} label="Alerts" />
         </div>
 
         <div className="mt-4">

@@ -11,6 +11,7 @@ const PAGE_TITLES = {
   "/map": "Map",
   "/events": "Historical Events",
   "/documents": "Documents",
+  "/alerts": "Alerts",
 };
 
 export default function Topbar({ title }) {
