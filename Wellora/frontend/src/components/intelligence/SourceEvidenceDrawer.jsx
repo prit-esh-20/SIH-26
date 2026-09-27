@@ -1,8 +1,19 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { FileText, X } from "lucide-react";
+import { FileText, X, ShieldAlert } from "lucide-react";
 import { getDocumentType } from "../../data/mockData.js";
 
+function getSourceType(event) {
+  // Future-ready: check for sourceType field, default to "representative" for prototype
+  return event?.sourceType ?? "representative";
+}
+
+function isRepresentative(event) {
+  return getSourceType(event) === "representative";
+}
+
 export default function SourceEvidenceDrawer({ event, open, onClose }) {
+  const representative = isRepresentative(event);
+
   return (
     <AnimatePresence>
       {open && event && (
@@ -43,8 +54,19 @@ export default function SourceEvidenceDrawer({ event, open, onClose }) {
                   <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-wl-text-muted">
                     Source
                   </div>
-                  <div className="mt-0.5 text-[20px] font-semibold tracking-wide">
-                    {event.document}
+                  <div className="flex items-baseline gap-2 mt-0.5">
+                    <span className="text-[20px] font-semibold tracking-wide">
+                      {event.document}
+                    </span>
+                    {representative && (
+                      <span
+                        className="flex items-center gap-1 px-1.5 py-0.5 text-[8.5px] font-semibold uppercase tracking-[0.1em] bg-wl-border/50 rounded-[3px] text-wl-text-muted"
+                        title="Representative prototype data"
+                      >
+                        <ShieldAlert size={9} />
+                        REPRESENTATIVE
+                      </span>
+                    )}
                   </div>
                   <div className="mt-0.5 text-[11.5px] text-wl-text-muted">
                     {getDocumentType(event.document)} · Page {event.page}
@@ -65,19 +87,30 @@ export default function SourceEvidenceDrawer({ event, open, onClose }) {
                   <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-wl-text-muted">
                     Document Excerpt
                   </span>
-                  <span className="text-[9.5px] uppercase tracking-[0.08em] text-wl-text-muted">
-                    Representative source excerpt
-                  </span>
+                  {representative && (
+                    <span className="text-[9.5px] uppercase tracking-[0.08em] text-wl-text-muted">
+                      Representative source excerpt
+                    </span>
+                  )}
                 </div>
                 <blockquote className="mt-2 rounded-[5px] border border-wl-border bg-wl-surface-2 px-4 py-3.5 text-[12.5px] leading-relaxed text-wl-text-primary">
                   {event.excerpt}
                 </blockquote>
               </div>
 
-              <div className="mt-6 rounded-[5px] border border-wl-border px-4 py-3 text-[10.5px] leading-relaxed text-wl-text-muted">
-                Representative prototype text for SIH 2026 problem statement SIH26121. Not an actual
-                operator document. The document viewer with original reports is planned for a later phase.
-              </div>
+              {representative && (
+                <div className="mt-6 rounded-[5px] border border-wl-border bg-wl-surface-2/50 px-4 py-3">
+                  <div className="flex items-start gap-2">
+                    <ShieldAlert size={12} className="mt-0.5 shrink-0 text-wl-accent" />
+                    <div className="text-[10.5px] leading-relaxed text-wl-text-muted">
+                      <span className="font-semibold text-wl-text-secondary">PROTOTYPE DATA NOTICE</span>
+                      <br />
+                      Representative prototype evidence created for SIH 2026 PS SIH26121.
+                      This is not an actual OIL operator document.
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </motion.aside>
         </motion.div>
