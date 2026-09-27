@@ -95,12 +95,12 @@ export default function Sidebar() {
         </div>
 
         <div className="mt-4">
-          <NavItem to="/reports" icon={FileBarChart} label="Reports" disabled />
+          <NavItem to="/reports" icon={FileBarChart} label="Reports" />
         </div>
       </nav>
 
       <div className="border-t border-wl-border px-2.5 py-3">
-        <NavItem to="/settings" icon={Settings} label="Settings" disabled />
+        <NavItem to="/settings" icon={Settings} label="Settings" />
         <div className="mt-1 flex items-center gap-2.5 rounded-[4px] px-3 py-[7px] text-[13px] font-medium text-wl-text-secondary">
           <span className="flex h-6 w-6 items-center justify-center rounded-[3px] bg-wl-accent-light text-[10px] font-semibold text-wl-accent-dark">
             DE

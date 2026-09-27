@@ -6,6 +6,8 @@ import Map from "./pages/Map.jsx";
 import HistoricalEvents from "./pages/HistoricalEvents.jsx";
 import Documents from "./pages/Documents.jsx";
 import Alerts from "./pages/Alerts.jsx";
+import Reports from "./pages/Reports.jsx";
+import Settings from "./pages/Settings.jsx";
 
 export default function App() {
   return (
@@ -17,6 +19,8 @@ export default function App() {
         <Route path="/events" element={<HistoricalEvents />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/alerts" element={<Alerts />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>
     </Routes>

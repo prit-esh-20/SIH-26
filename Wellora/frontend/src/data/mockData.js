@@ -848,3 +848,114 @@ export function getDocumentType(documentId) {
 export function getDocumentById(rowId) {
   return documentLibrary.find((d) => d.id === rowId) ?? null;
 }
+
+// ---------------------------------------------------------------------------
+// Reports: the report center behind the Reports page. Rows reference the
+// wells, alerts, events and documents above so titles, depths, formations
+// and evidence always agree with the rest of the prototype. Evidence and
+// source documents are stored as references resolved by getReportEvidence()
+// and getReportDocuments() below.
+// ---------------------------------------------------------------------------
+
+export const reportTypes = [
+  "Current Well Intelligence",
+  "Risk Assessment",
+  "Historical Events",
+  "Well Comparison",
+  "Alert Evidence",
+];
+
+const reportBase = {
+  wellId: "W-205",
+  depth: W205.depth,
+  formation: W205.formation,
+  status: "Ready",
+};
+
+const reportsBase = [
+  {
+    id: "RPT-001",
+    title: "W-205 Drilling Intelligence Report",
+    type: "Current Well Intelligence",
+    generated: "2026-09-27",
+    evidenceEventIds: ["EV-001", "EV-002", "EV-003", "EV-009"],
+    sourceDocumentIds: ["DDR-W201", "DDR-W198", "WCR-W198", "WCR-W187"],
+  },
+  {
+    id: "RPT-002",
+    title: "W-205 Historical Risk Assessment",
+    type: "Risk Assessment",
+    generated: "2026-09-27",
+    evidenceEventIds: ["EV-001", "EV-003", "EV-005"],
+    sourceDocumentIds: ["DDR-W201", "DDR-W187"],
+  },
+  {
+    id: "RPT-003",
+    title: "W-201 Offset Well Intelligence",
+    type: "Comparable Well Report",
+    wellId: "W-201",
+    // Reference depth is the key historical event depth on W-201, not the
+    // well's current depth, so the report stays consistent with EV-001.
+    depth: 2875,
+    generated: "2026-09-26",
+    evidenceEventIds: ["EV-001", "EV-009"],
+    sourceDocumentIds: ["DDR-W201"],
+  },
+  {
+    id: "RPT-004",
+    title: "W-205 Historical Events Summary",
+    type: "Historical Events",
+    generated: "2026-09-26",
+    evidenceEventIds: ["EV-001", "EV-002", "EV-003", "EV-005", "EV-012"],
+    sourceDocumentIds: ["DDR-W201", "WCR-W198", "DDR-W187"],
+  },
+  {
+    id: "RPT-005",
+    title: "W-205 Alert Evidence Report",
+    type: "Alert Evidence",
+    generated: "2026-09-27",
+    evidenceEventIds: ["EV-001", "EV-002", "EV-013"],
+    sourceDocumentIds: ["DDR-W201", "WCR-W198", "DDR-W187"],
+  },
+  {
+    id: "RPT-006",
+    title: "Nearby Wells Comparison Report",
+    type: "Well Comparison",
+    generated: "2026-09-25",
+    evidenceEventIds: ["EV-001", "EV-002", "EV-003", "EV-006", "EV-007", "EV-010"],
+    sourceDocumentIds: ["DDR-W201", "WCR-W198", "DDR-W198", "WCR-W187"],
+  },
+].map((r) => ({ ...reportBase, ...r }));
+
+export const reports = reportsBase;
+
+export function getReports() {
+  return reports;
+}
+
+// Resolves a report's evidence references to full historicalEvents records.
+export function getReportEvidence(report) {
+  return (report.evidenceEventIds ?? [])
+    .map((id) => getEventById(id))
+    .filter(Boolean);
+}
+
+// Resolves a report's source-document references to documentLibrary rows
+// (first matching page for each document id).
+export function getReportDocuments(report) {
+  return (report.sourceDocumentIds ?? [])
+    .map((docId) => documentLibrary.find((d) => d.documentId === docId))
+    .filter(Boolean);
+}
+
+// Report title for a freshly generated report of the given type.
+export function reportTitleForType(type, wellId = "W-205") {
+  const byType = {
+    "Current Well Intelligence": `${wellId} Drilling Intelligence Report`,
+    "Risk Assessment": `${wellId} Historical Risk Assessment`,
+    "Historical Events": `${wellId} Historical Events Summary`,
+    "Well Comparison": "Nearby Wells Comparison Report",
+    "Alert Evidence": `${wellId} Alert Evidence Report`,
+  };
+  return byType[type] ?? `${wellId} ${type} Report`;
+}
